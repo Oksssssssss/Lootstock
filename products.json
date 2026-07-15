@@ -1,7 +1,7 @@
 [
   {
     "id": "p_rental_1",
-    "name": "Starter Plan",
+    "name": "nonameyet",
     "type": "rental",
     "icon": "📦",
     "badge": "popular",
@@ -10,7 +10,7 @@
     "desc": "Replace with a real description of what this plan includes.",
     "paypal": "https://paypal.me/BillyJay616/5",
     "soldOut": false,
-    "visible": true,
+    "visible": false,
     "addedAt": 1000000000001
   },
   {
@@ -72,13 +72,13 @@
 
   {
     "id": "p_purchase_1",
-    "name": "Basic Pack",
+    "name": "Discord verification bot",
     "type": "purchase",
     "icon": "🎁",
-    "badge": "",
-    "price": "15",
+    "badge": "popular", "cheap",
+    "price": "3",
     "unit": "CAD",
-    "desc": "Replace with a real description of what's included.",
+    "desc": "Discord bot that gets set up in your discord server to make sure no one can raid you and your community!",
     "paypal": "https://paypal.me/BillyJay616/15",
     "soldOut": false,
     "visible": true,
