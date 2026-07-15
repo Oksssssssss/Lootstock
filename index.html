@@ -759,10 +759,10 @@
         <li><a href="#contact" class="nav-link" data-target="contact">Contact</a></li>
       </ul>
       <div class="account-panel">
-        <button class="account-btn" id="account-btn" onclick="onAccountBtnClick()">👤 <span id="account-btn-label">Account</span></button>
+        <button class="account-btn" id="account-btn" onclick="onAccountBtnClick()">🔐 <span id="account-btn-label">Account</span></button>
         <div class="account-dropdown" id="account-dropdown">
-          <button onclick="toggleView('wishlist')">💛 Wishlist</button>
-          <button onclick="toggleView('purchases')">🧾 My Purchases</button>
+          <button onclick="toggleView('wishlist')">❤️ Wishlist</button>
+          <button onclick="toggleView('purchases')">📝 My Purchases</button>
           <button onclick="logout()">Log out</button>
         </div>
       </div>
@@ -786,10 +786,14 @@
     <details class="how-to">
       <summary onclick="toggleInstructions(event)">📌 How buying works</summary>
       <ol>
-        <li>Choose a plan or item below.</li>
-        <li>Complete payment through PayPal.</li>
-        <li>Save your payment confirmation.</li>
-        <li>Follow the delivery instructions in your confirmation email.</li>
+<li>Choose an item below.</li>
+<li>Complete your payment through PayPal.</li>
+<li>Save your payment confirmation.</li>
+<li>Go to Discord and send a direct message to <strong>itz.zan</strong>.</li>
+<li>Send your proof of payment and tell us which item you purchased.</li>
+<li>If the account is offline, please note that delivery may take longer than the usual 10–15 minutes.</li>
+<li>Once everything has been verified, you'll receive your purchased item.</li>
+<li>Thank you for your purchase!</li>
       </ol>
     </details>
 
@@ -801,7 +805,7 @@
       <div class="feature-card reveal">
         <div class="icon">⚡</div>
         <h3>Fast Delivery</h3>
-        <p>Orders are delivered promptly after payment is confirmed.</p>
+        <p>Orders are delivered promptly after payment is confirmed. (10-15 mins)</p>
       </div>
       <div class="feature-card reveal">
         <div class="icon">🔒</div>
@@ -811,7 +815,7 @@
       <div class="feature-card reveal">
         <div class="icon">💬</div>
         <h3>Direct Support</h3>
-        <p>Reach out any time with questions about your order.</p>
+        <p>Reach out any time with questions about your order. (please use discord to reach out)</p>
       </div>
     </div>
 
@@ -877,23 +881,23 @@
       <div class="faq">
         <details class="reveal">
           <summary>How long does delivery take?</summary>
-          <p>Orders are delivered shortly after payment is confirmed. Most are handled within the same day — if your order is taking longer than expected, reach out on Discord and we'll look into it.</p>
+          <p>Orders are delivered shortly after payment is confirmed. (10-15 mins is the fastest) Most are handled within the same day — if your order is taking longer than expected, we may be offline and will get back to you soon.</p>
         </details>
         <details class="reveal">
           <summary>How do I receive my order?</summary>
-          <p>Once your payment confirmation is received, delivery details are sent directly through Discord. Keep your payment confirmation handy in case we need to verify it.</p>
+          <p>Once your payment confirmation is sent over to us, we will verify and make sure we got the money and will send over the paid purchased. delivery take up to 10-15 minutes. MAKE SURE to Keep your payment confirmation handy in case we need to verify it again..</p>
         </details>
         <details class="reveal">
           <summary>What if I don't receive my order?</summary>
-          <p>Message us on Discord with your payment confirmation and we'll sort it out. If we can't deliver what you paid for, you're entitled to a refund under our Refund Policy below.</p>
+          <p>Message us on Discord with your payment confirmation and we'll sort it out. If we can't deliver what you paid for, you're entitled to a refund under our Refund Policy below. (if no payment was given we will not give a refund)</p>
         </details>
         <details class="reveal">
           <summary>Can I get a refund?</summary>
-          <p>Yes, in the situations covered by our Refund Policy below — mainly if an order wasn't delivered or wasn't as described. See the Terms &amp; Policies section for the full details.</p>
+          <p>Yes, in the situations where we can't get you you're paid purchased your covered by our Refund Policy. If an order wasn't delivered or wasn't as described. See the Terms &amp; Policies section for the full details.</p>
         </details>
         <details class="reveal">
           <summary>Do monthly plans auto-renew?</summary>
-          <p>Yes. Monthly plans renew automatically each billing period until you cancel. You can cancel any time by messaging us on Discord before your next billing date.</p>
+          <p>No. Monthly plans DO NOT renew automatically each month you will have to 1: Cancel the order or 2: Renew your order. Reminder that you can cancel any time by messaging us on Discord before your next billing date.</p>
         </details>
         <details class="reveal">
           <summary>What payment methods do you accept?</summary>
@@ -907,7 +911,7 @@
 
       <div class="policy-section reveal">
         <h3>Terms of Service</h3>
-        <p>By purchasing from Loopstock, you agree to these terms. Orders are paid for through PayPal and fulfilled by our team through Discord. It's your responsibility to provide accurate payment information and to keep your payment confirmation until your order is delivered. We reserve the right to refuse or cancel any order at our discretion, in which case a full refund will be issued.</p>
+        <p>By purchasing from Loopstock, you agree to these terms. Orders are paid through PayPal and fulfilled by our team through Discord. It's your responsibility to provide accurate payment information and to keep your payment confirmation until your order is delivered. We reserve the right to refuse or cancel any order at our discretion, in which case a full refund will be issued. if money was sent.</p>
       </div>
 
       <div class="policy-section reveal">
@@ -921,7 +925,7 @@
 
       <div class="policy-section reveal">
         <h3>Rental Rules</h3>
-        <p>Monthly plans grant access for the length of the billing period you've paid for. Access continues automatically each period until you cancel. You can cancel any time before your next billing date to avoid being charged again; cancelling doesn't refund the current period already paid for.</p>
+        <p>Monthly plans grant access for the length of the billing period you've paid for. You can cancel any time before your next billing date to avoid being charged again; cancelling doesn't refund the current period already paid for.</p>
       </div>
 
       <div class="policy-section reveal">
@@ -931,7 +935,7 @@
 
       <div class="policy-section reveal">
         <h3>Delivery Times</h3>
-        <p>Orders are typically delivered shortly after payment is confirmed. If delivery is delayed beyond a reasonable time, contact us on Discord and we'll either resolve it or issue a refund.</p>
+        <p>Orders are typically delivered shortly after payment is confirmed(10-15 mins). If delivery is delayed beyond a reasonable time, contact us on Discord and we'll either resolve it or issue a refund. (if the discord account we use is not online please wait for it to go online.)</p>
       </div>
 
       <div class="policy-section reveal">
