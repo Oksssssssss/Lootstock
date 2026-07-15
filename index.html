@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1340,9 +1339,9 @@
       const typeLabel = p.type === 'rental' ? 'Rental' : 'Purchase';
       const buyBtn = p.soldOut
         ? '<button class="buy" disabled><span class="btn-label">Sold Out</span></button>'
-        : '<button class="buy" onclick="startCheckout(this, ' + JSON.stringify(p.paypal) + ')"><span class="spinner"></span><span class="btn-label">' +
+        : '<button class="buy" onclick=\'startCheckout(this, ' + JSON.stringify(p.paypal) + ')\'><span class="spinner"></span><span class="btn-label">' +
           (p.type === 'rental' ? 'Subscribe' : 'Buy Now') + '</span></button>';
-      const adminDelBtn = isAdmin() ? '<button class="admin-delete-btn" onclick="adminDeleteProduct(' + JSON.stringify(p.id) + ')" aria-label="Delete product">✕</button>' : '';
+      const adminDelBtn = isAdmin() ? '<button class="admin-delete-btn" onclick=\'adminDeleteProduct(' + JSON.stringify(p.id) + ')\' aria-label="Delete product">✕</button>' : '';
 
       return '<div class="item" data-pid="' + p.id + '">' +
         adminDelBtn +
@@ -1353,16 +1352,16 @@
         '<p class="price">$' + escapeHtml(p.price) + ' <span class="unit">' + escapeHtml(p.unit || '') + '</span></p>' +
         '<div class="discord-line">Delivery via Discord: <button onclick="copyDiscord(this)">itz.zan 📋</button></div>' +
         buyBtn +
-        '<button class="wishlist-btn" data-pid="' + p.id + '" onclick="toggleWishlist(' + JSON.stringify(p.id) + ')" aria-label="Add to wishlist">🤍</button>' +
+        '<button class="wishlist-btn" data-pid="' + p.id + '" onclick=\'toggleWishlist(' + JSON.stringify(p.id) + ')\' aria-label="Add to wishlist">🤍</button>' +
         '<div class="review-box">' +
           '<div class="review-summary"><span id="rev-avg-' + p.id + '">No reviews yet</span>' +
-          '<button class="review-toggle" onclick="toggleReviewForm(' + JSON.stringify(p.id) + ')">Write a review</button></div>' +
+          '<button class="review-toggle" onclick=\'toggleReviewForm(' + JSON.stringify(p.id) + ')\'>Write a review</button></div>' +
           '<div class="review-form" id="rev-form-' + p.id + '">' +
             '<div class="star-input" id="rev-stars-' + p.id + '" data-value="0">' +
               [1,2,3,4,5].map(n => '<span data-v="' + n + '">★</span>').join('') +
             '</div>' +
             '<textarea id="rev-text-' + p.id + '" placeholder="Share your experience..."></textarea>' +
-            '<button class="submit-review" onclick="submitReview(' + JSON.stringify(p.id) + ')">Submit Review</button>' +
+            '<button class="submit-review" onclick=\'submitReview(' + JSON.stringify(p.id) + ')\'>Submit Review</button>' +
           '</div>' +
           '<div class="review-list" id="rev-list-' + p.id + '"></div>' +
         '</div>' +
