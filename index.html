@@ -852,38 +852,11 @@
       </div>
 
       <div id="admin-panel" style="display:none;">
-        <h3 style="margin-bottom:14px;">🛠 Admin — Add a Product</h3>
-        <div class="admin-grid">
-          <input type="text" id="admin-name" placeholder="Product name">
-          <select id="admin-type">
-            <option value="rental">Rental (Monthly Plan)</option>
-            <option value="purchase">Purchase (One-Time)</option>
-          </select>
-          <input type="text" id="admin-icon" placeholder="Icon emoji (e.g. 📦)" value="📦">
-          <select id="admin-badge">
-            <option value="">No special badge</option>
-            <option value="popular">Popular</option>
-            <option value="best">Best Value</option>
-          </select>
-          <input type="number" step="0.01" id="admin-price" placeholder="Price (e.g. 5)">
-          <input type="text" id="admin-unit" placeholder="Unit (e.g. / month or CAD)">
-          <textarea id="admin-desc" placeholder="Description" style="grid-column:1/-1;"></textarea>
-          <input type="text" id="admin-paypal" placeholder="PayPal link (e.g. https://paypal.me/you/5)" style="grid-column:1/-1;">
-          <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem;">
-            <input type="checkbox" id="admin-soldout"> Mark as Sold Out
-          </label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem;">
-            <input type="checkbox" id="admin-visible" checked> Visible on site now
-          </label>
-        </div>
+        <h3 style="margin-bottom:14px;">🛠 Edit Mode</h3>
+        <p class="account-note">Products are built directly into this page's code now — search the script for <strong>PRODUCTS = [</strong> to find the list. Each product has a <code>visible: true</code> or <code>visible: false</code> field — flip that one value and re-upload the file to drop a product live for everyone. While in edit mode, hidden products still show up here (dimmed, marked "Hidden") so you can preview them before flipping them live.</p>
         <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
-          <button class="admin-action-btn" onclick="adminAddProduct()">+ Add Product</button>
-          <button class="admin-action-btn secondary" onclick="exportProductsJson()">⬇ Export Backup (JSON)</button>
-          <button class="admin-action-btn secondary" onclick="importSeedProducts()">📥 Import products.json (one-time)</button>
-          <button class="admin-action-btn danger" onclick="adminRemoveAll()">🗑 Remove All Products</button>
           <button class="admin-action-btn secondary" onclick="exitEditMode()">🔒 Exit Edit Mode</button>
         </div>
-        <p class="account-note" style="margin-top:12px;">You're in edit mode because this browser opened the secret edit link. Changes you make here — adding, hiding, or deleting products — now save to the shared database and appear for <strong>every visitor</strong>, in real time. "Export Backup" just downloads a local copy for safekeeping; it's optional.</p>
       </div>
 
       <div class="search-wrap">
@@ -979,8 +952,8 @@
   </footer>
 
   <!-- Firebase (shared database — makes products & reviews the same for every visitor) -->
-  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js" onerror="window.__firebaseLoadFailed=true"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js" onerror="window.__firebaseLoadFailed=true"></script>
 
   <script>
     // Terms modal
@@ -1220,12 +1193,18 @@
 
     let db = null;
     let firebaseReady = false;
-    try {
-      firebase.initializeApp(firebaseConfig);
-      db = firebase.firestore();
-      firebaseReady = true;
-    } catch (e) {
-      console.error('Firebase failed to initialize — check firebaseConfig.', e);
+    if (window.__firebaseLoadFailed || typeof firebase === 'undefined') {
+      console.error('Firebase SDK scripts did not load — check your internet connection or the CDN <script> tags in <head>.');
+      showToast('Could not load the Firebase library — check your connection and reload.', 'error');
+    } else {
+      try {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        firebaseReady = true;
+      } catch (e) {
+        console.error('Firebase SDK loaded, but initializeApp() failed — this usually means firebaseConfig has placeholder or incorrect values.', e);
+        showToast('Firebase config looks incomplete — paste your real project config in.', 'error');
+      }
     }
 
     function setSyncStatus(state) {
@@ -1233,135 +1212,70 @@
       const text = document.getElementById('sync-text');
       if (!dot || !text) return;
       dot.className = 'sync-dot ' + state;
-      text.textContent = state === 'live' ? 'Live — synced for everyone'
-        : state === 'offline' ? 'Not connected (check Firebase setup)'
-        : 'Connecting…';
+      text.textContent = state === 'live' ? 'Reviews: live — synced for everyone'
+        : state === 'offline' ? 'Reviews: not connected (check Firebase setup)'
+        : 'Reviews: connecting…';
     }
 
-    let PRODUCTS_CACHE = [];
+    // =====================================================================
+    // PRODUCTS — built directly into this file, so every visitor gets the
+    // exact same list automatically (no database needed for this part).
+    //
+    // To add a product: copy one whole { ... } block below, paste it as a
+    // new entry, give it a unique "id", fill in the details.
+    //
+    // To "drop" a staged product live: find it below, change its
+    // "visible" field from false to true, save this file, and re-upload
+    // it to your host. That's the entire "one thing changes" workflow.
+    //
+    // soldOut: true shows a "Sold Out" badge and disables the Buy button.
+    // addedAt: just needs to be a unique, increasing number — it's used
+    // to figure out what counts as "new" for the new-product banner.
+    // =====================================================================
+    const PRODUCTS = [
+      { id: 'p_rental_1', name: 'Fully working discord bot', type: 'rental', icon: '📦', badge: 'popular',
+        price: '20', unit: '/ month', desc: 'A fully functional Discord bot built to work perfectly in your server. Whatever you want it to do, it can do. (we will install it)',
+        paypal: 'https://paypal.me/BillyJay616/20', soldOut: false, visible: true, addedAt: 1000000000001 },
 
-    function getProducts() { return PRODUCTS_CACHE; }
+      { id: 'p_rental_2', name: 'Standard Plan', type: 'rental', icon: '📦', badge: '',
+        price: '10', unit: '/ month', desc: 'Replace with a real description of what this plan includes.',
+        paypal: 'https://paypal.me/BillyJay616/10', soldOut: false, visible: false, addedAt: 1000000000002 },
 
-    function listenToProducts() {
-      if (!firebaseReady) { setSyncStatus('offline'); return; }
-      db.collection('products').onSnapshot((snapshot) => {
-        PRODUCTS_CACHE = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setSyncStatus('live');
-        renderProducts();
-        updateStats();
-      }, (err) => {
-        console.error('Products listener error:', err);
-        setSyncStatus('offline');
-        showToast('Could not connect to the shared database — check Firebase setup.', 'error');
-      });
-    }
+      { id: 'p_rental_3', name: 'Pro Plan', type: 'rental', icon: '📦', badge: 'best',
+        price: '18', unit: '/ month', desc: 'Replace with a real description of what this plan includes.',
+        paypal: 'https://paypal.me/BillyJay616/18', soldOut: false, visible: false, addedAt: 1000000000003 },
 
-    async function adminAddProduct() {
-      if (!isAdmin() || !firebaseReady) return;
-      const name = document.getElementById('admin-name').value.trim();
-      const type = document.getElementById('admin-type').value;
-      const icon = document.getElementById('admin-icon').value.trim() || '📦';
-      const badge = document.getElementById('admin-badge').value;
-      const price = document.getElementById('admin-price').value.trim();
-      const unit = document.getElementById('admin-unit').value.trim();
-      const desc = document.getElementById('admin-desc').value.trim();
-      const paypal = document.getElementById('admin-paypal').value.trim();
-      const soldOut = document.getElementById('admin-soldout').checked;
-      const visible = document.getElementById('admin-visible').checked;
-      if (!name || !price) { showToast('Product name and price are required.', 'error'); return; }
+      { id: 'p_rental_4', name: 'Team Plan', type: 'rental', icon: '📦', badge: '',
+        price: '30', unit: '/ month', desc: 'Replace with a real description of what this plan includes.',
+        paypal: 'https://paypal.me/BillyJay616/30', soldOut: false, visible: false, addedAt: 1000000000004 },
 
-      try {
-        await db.collection('products').add({
-          name, type, icon, badge, price, unit, desc,
-          paypal: paypal || '#',
-          soldOut, visible,
-          adminSecret: EDIT_TOKEN,
-          addedAt: Date.now()
-        });
-      } catch (e) {
-        console.error(e);
-        showToast('Could not add product — check Firestore rules/setup.', 'error');
-        return;
-      }
+      { id: 'p_rental_5', name: 'Upcoming Plan', type: 'rental', icon: '📦', badge: '',
+        price: '12', unit: '/ month', desc: 'Example of a staged product — flip visible to true to drop it live.',
+        paypal: 'https://paypal.me/BillyJay616/12', soldOut: false, visible: false, addedAt: 1000000000005 },
 
-      ['admin-name','admin-price','admin-unit','admin-desc','admin-paypal'].forEach(id => document.getElementById(id).value = '');
-      document.getElementById('admin-soldout').checked = false;
-      document.getElementById('admin-visible').checked = true;
-      showToast('Product added — live for everyone now.');
-    }
+      { id: 'p_purchase_1', name: 'Discord verification bot', type: 'purchase', icon: '🎁', badge: '',
+        price: '15', unit: 'CAD', desc: "Veifys people by a click of a button. (we will install it)",
+        paypal: 'https://paypal.me/BillyJay616/15', soldOut: false, visible: true, addedAt: 1000000000006 },
 
-    async function adminDeleteProduct(pid) {
-      if (!isAdmin() || !firebaseReady) return;
-      try {
-        await db.collection('products').doc(pid).delete();
-        showToast('Product removed.');
-      } catch (e) {
-        console.error(e);
-        showToast('Could not delete product.', 'error');
-      }
-    }
+      { id: 'p_purchase_2', name: 'Digital Pack', type: 'purchase', icon: '🎁', badge: 'best',
+        price: '25', unit: 'CAD', desc: "Replace with a real description of what's included.",
+        paypal: 'https://paypal.me/BillyJay616/25', soldOut: false, visible: false, addedAt: 1000000000007 },
 
-    async function adminToggleVisible(pid) {
-      if (!isAdmin() || !firebaseReady) return;
-      const product = PRODUCTS_CACHE.find(p => p.id === pid);
-      if (!product) return;
-      const newVisible = !(product.visible !== false);
-      try {
-        await db.collection('products').doc(pid).update({ visible: newVisible, adminSecret: EDIT_TOKEN });
-        showToast(newVisible ? 'Product is now live on the site.' : 'Product hidden from the site.');
-      } catch (e) {
-        console.error(e);
-        showToast('Could not update product.', 'error');
-      }
-    }
+      { id: 'p_purchase_3', name: 'Deluxe Pack', type: 'purchase', icon: '🎁', badge: 'popular',
+        price: '40', unit: 'CAD', desc: "Replace with a real description of what's included.",
+        paypal: 'https://paypal.me/BillyJay616/40', soldOut: false, visible: false, addedAt: 1000000000008 },
 
-    async function adminRemoveAll() {
-      if (!isAdmin() || !firebaseReady) return;
-      if (!confirm('Remove ALL products for EVERY visitor? This can\'t be undone.')) return;
-      try {
-        const snapshot = await db.collection('products').get();
-        const batch = db.batch();
-        snapshot.docs.forEach(doc => batch.delete(doc.ref));
-        await batch.commit();
-        showToast('All products removed.');
-      } catch (e) {
-        console.error(e);
-        showToast('Could not remove all products.', 'error');
-      }
-    }
+      { id: 'p_purchase_4', name: 'Limited Item', type: 'purchase', icon: '🎁', badge: '',
+        price: '35', unit: 'CAD', desc: "Replace with a real description of what's included.",
+        paypal: 'https://paypal.me/BillyJay616/35', soldOut: true, visible: false, addedAt: 1000000000009 },
 
-    function exportProductsJson() {
-      const data = JSON.stringify(PRODUCTS_CACHE, null, 2);
-      const blob = new Blob([data], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'products-backup.json';
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast('Downloaded a backup copy.');
-    }
+      { id: 'p_purchase_5', name: 'Upcoming Item', type: 'purchase', icon: '🎁', badge: '',
+        price: '20', unit: 'CAD', desc: 'Example of a staged product — flip visible to true to drop it live.',
+        paypal: 'https://paypal.me/BillyJay616/20', soldOut: false, visible: false, addedAt: 1000000000010 }
+    ];
 
-    async function importSeedProducts() {
-      if (!isAdmin() || !firebaseReady) return;
-      try {
-        const res = await fetch('products.json');
-        if (!res.ok) { showToast('No products.json found next to this page.', 'error'); return; }
-        const data = await res.json();
-        if (!Array.isArray(data)) { showToast('products.json is not a valid list.', 'error'); return; }
-        const batch = db.batch();
-        data.forEach(p => {
-          const ref = db.collection('products').doc();
-          const { id, ...rest } = p;
-          batch.set(ref, { ...rest, adminSecret: EDIT_TOKEN });
-        });
-        await batch.commit();
-        showToast('Imported ' + data.length + ' products into the shared database.');
-      } catch (e) {
-        console.error(e);
-        showToast('Import failed — see console for details.', 'error');
-      }
-    }
+    function getProducts() { return PRODUCTS; }
+
 
     function productCardHtml(p) {
       const badgeHtml = p.soldOut
@@ -1373,15 +1287,10 @@
         ? '<button class="buy" disabled><span class="btn-label">Sold Out</span></button>'
         : '<button class="buy" onclick=\'startCheckout(this, ' + JSON.stringify(p.paypal) + ')\'><span class="spinner"></span><span class="btn-label">' +
           (p.type === 'rental' ? 'Subscribe' : 'Buy Now') + '</span></button>';
-      const adminDelBtn = isAdmin() ? '<button class="admin-delete-btn" onclick=\'adminDeleteProduct(' + JSON.stringify(p.id) + ')\' aria-label="Delete product">✕</button>' : '';
       const isHidden = p.visible === false;
-      const adminVisBtn = isAdmin()
-        ? '<button class="admin-vis-btn" onclick=\'adminToggleVisible(' + JSON.stringify(p.id) + ')\'>' + (isHidden ? '👁 Make Live' : '🙈 Hide') + '</button>'
-        : '';
       const hiddenBadge = (isAdmin() && isHidden) ? '<span class="badge badge-hidden">Hidden — admin only</span>' : '';
 
       return '<div class="item' + (isAdmin() && isHidden ? ' item-hidden' : '') + '" data-pid="' + p.id + '">' +
-        adminDelBtn +
         '<div class="badge-row"><span class="badge badge-type">' + typeLabel + '</span>' + badgeHtml + hiddenBadge + '</div>' +
         '<div class="icon-wrap">' + escapeHtml(p.icon) + '</div>' +
         '<h3>' + escapeHtml(p.name) + '</h3>' +
@@ -1389,7 +1298,6 @@
         '<p class="price">$' + escapeHtml(p.price) + ' <span class="unit">' + escapeHtml(p.unit || '') + '</span></p>' +
         '<div class="discord-line">Delivery via Discord: <button onclick="copyDiscord(this)">itz.zan 📋</button></div>' +
         buyBtn +
-        adminVisBtn +
         '<button class="wishlist-btn" data-pid="' + p.id + '" onclick=\'toggleWishlist(' + JSON.stringify(p.id) + ')\' aria-label="Add to wishlist">🤍</button>' +
         '<div class="review-box">' +
           '<div class="review-summary"><span id="rev-avg-' + p.id + '">No reviews yet</span>' +
@@ -1407,7 +1315,7 @@
     }
 
     function renderProducts() {
-      const list = PRODUCTS_CACHE;
+      const list = PRODUCTS;
       const visibleToThisVisitor = isAdmin() ? list : list.filter(p => p.visible !== false);
       const monthly = visibleToThisVisitor.filter(p => p.type === 'rental');
       const onetime = visibleToThisVisitor.filter(p => p.type === 'purchase');
@@ -1424,7 +1332,7 @@
 
     const LAST_SEEN_KEY = 'loopstock_last_seen_products';
     function checkNewProductsBanner() {
-      const list = PRODUCTS_CACHE.filter(p => p.visible !== false);
+      const list = PRODUCTS.filter(p => p.visible !== false);
       const banner = document.getElementById('new-products-banner');
       if (!list.length) { banner.style.display = 'none'; return; }
       let lastSeen = parseInt(localStorage.getItem(LAST_SEEN_KEY) || '0', 10);
@@ -1444,7 +1352,7 @@
       }
     }
     function dismissNewProductsBanner() {
-      const list = PRODUCTS_CACHE.filter(p => p.visible !== false);
+      const list = PRODUCTS.filter(p => p.visible !== false);
       const maxAdded = list.reduce((m, p) => Math.max(m, p.addedAt || 0), 0);
       localStorage.setItem(LAST_SEEN_KEY, String(maxAdded));
       document.getElementById('new-products-banner').style.display = 'none';
@@ -1455,7 +1363,7 @@
     function getReviews(pid) { return REVIEWS_CACHE[pid] || []; }
 
     function listenToReviews() {
-      if (!firebaseReady) return;
+      if (!firebaseReady) { setSyncStatus('offline'); return; }
       db.collection('reviews').onSnapshot((snapshot) => {
         const byProduct = {};
         snapshot.docs.forEach(doc => {
@@ -1468,7 +1376,11 @@
         const allIds = new Set([...previousIds, ...Object.keys(byProduct)]);
         allIds.forEach(pid => renderReviews(pid));
         updateStats();
-      }, (err) => console.error('Reviews listener error:', err));
+        setSyncStatus('live');
+      }, (err) => {
+        console.error('Reviews listener error:', err);
+        setSyncStatus('offline');
+      });
     }
 
     function toggleReviewForm(pid) {
@@ -1525,7 +1437,7 @@
     }
 
     function updateStats() {
-      const publicProducts = PRODUCTS_CACHE.filter(p => p.visible !== false);
+      const publicProducts = PRODUCTS.filter(p => p.visible !== false);
       document.getElementById('stat-products').textContent = publicProducts.length;
       let totalReviews = 0, ratingSum = 0;
       publicProducts.forEach(p => {
@@ -1548,8 +1460,9 @@
 
     checkEditLink();
     updateAccountUI();
+    renderProducts();
+    updateStats();
     setSyncStatus('connecting');
-    listenToProducts();
     listenToReviews();
   </script>
 </body>
