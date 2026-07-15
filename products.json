@@ -1,0 +1,54 @@
+[
+  {
+    "id": "p_1000000000001",
+    "name": "Starter Plan",
+    "type": "rental",
+    "icon": "📦",
+    "badge": "popular",
+    "price": "5",
+    "unit": "/ month",
+    "desc": "Replace this with a real description of what this plan includes.",
+    "paypal": "https://paypal.me/BillyJay616/5",
+    "soldOut": false,
+    "addedAt": 1000000000001
+  },
+  {
+    "id": "p_1000000000002",
+    "name": "Pro Plan",
+    "type": "rental",
+    "icon": "📦",
+    "badge": "",
+    "price": "10",
+    "unit": "/ month",
+    "desc": "Replace this with a real description of what this plan includes.",
+    "paypal": "https://paypal.me/BillyJay616/10",
+    "soldOut": false,
+    "addedAt": 1000000000002
+  },
+  {
+    "id": "p_1000000000003",
+    "name": "Digital Pack",
+    "type": "purchase",
+    "icon": "🎁",
+    "badge": "best",
+    "price": "25",
+    "unit": "CAD",
+    "desc": "Replace this with a real description of what's included.",
+    "paypal": "https://paypal.me/BillyJay616/25",
+    "soldOut": false,
+    "addedAt": 1000000000003
+  },
+  {
+    "id": "p_1000000000004",
+    "name": "Limited Item",
+    "type": "purchase",
+    "icon": "🎁",
+    "badge": "",
+    "price": "35",
+    "unit": "CAD",
+    "desc": "Replace this with a real description of what's included.",
+    "paypal": "https://paypal.me/BillyJay616/35",
+    "soldOut": true,
+    "addedAt": 1000000000004
+  }
+]
