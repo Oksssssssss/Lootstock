@@ -3,837 +3,545 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Loopstock — rentals and one-time purchases with clear pricing and PayPal checkout.">
-<meta property="og:title" content="Loopstock — Rentals & One-Time Purchases">
-<meta property="og:description" content="Rentals and one-time purchases with clear pricing and PayPal checkout.">
-<meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230ea968'/%3E%3Cpath d='M25,50 C25,37 36,37 50,50 C64,63 75,63 75,50 C75,37 64,37 50,50 C36,63 25,63 25,50 Z' fill='none' stroke='white' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<title>Loopstock — Rentals & One-Time Purchases</title>
+<meta name="description" content="ZANVERSE — projects, socials, and the shop, all in one place.">
+<title>ZANVERSE — Zan's Hub</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%232563eb'/%3E%3Cpath d='M25,50 C25,37 36,37 50,50 C64,63 75,63 75,50 C75,37 64,37 50,50 C36,63 25,63 25,50 Z' fill='none' stroke='white' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #12181f;
-    --ink-soft: #4b5563;
-    --paper: #f7f8f6;
-    --card: #ffffff;
-    --accent: #0ea968;
-    --accent-dark: #087a4b;
-    --line: #e4e7e2;
-    --warn-bg: #fff7e6;
-    --warn-line: #e0a52b;
-    --radius: 14px;
-  }
+/* =====================================================================
+   ZANVERSE — one-file site. Look for "SITE CONFIG" near the top of the
+   <script> at the bottom to change text, links, prices, and products
+   without touching the rest of the code.
+   ===================================================================== */
 
-  html.dark {
-    --ink: #eef1ee;
-    --ink-soft: #aab0b6;
-    --paper: #0f151b;
-    --card: #182029;
-    --line: #2a333d;
-    --warn-bg: #2a2410;
-    --warn-line: #b8860b;
-  }
+:root{
+  --bg-deep:#0a0e1a;
+  --bg-deep-2:#0d1326;
+  --accent:#2563eb;
+  --accent-light:#60a5fa;
+  --accent-cyan:#22d3ee;
+  --glass:rgba(255,255,255,0.06);
+  --glass-strong:rgba(255,255,255,0.1);
+  --border:rgba(255,255,255,0.12);
+  --text:#f4f6ff;
+  --text-soft:#c7d2fe;
+  --text-mute:#8b93b8;
+  --warn-bg:rgba(217,164,6,0.12);
+  --warn-line:#d9a406;
+  --surface-solid:#121a30;
+  --radius:20px;
+  --radius-sm:12px;
+  --font-display:'Space Grotesk', system-ui, sans-serif;
+  --font-body:'Inter', system-ui, sans-serif;
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+html.light{
+  --bg-deep:#eef2ff;
+  --bg-deep-2:#f8fafc;
+  --glass:rgba(255,255,255,0.6);
+  --glass-strong:rgba(255,255,255,0.85);
+  --border:rgba(15,23,42,0.12);
+  --text:#111827;
+  --text-soft:#334155;
+  --text-mute:#5b6472;
+  --warn-bg:#fef3c7;
+  --surface-solid:#ffffff;
+}
 
-  html { scroll-behavior: smooth; }
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--bg-deep);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  line-height:1.6;
+  overflow-x:hidden;
+  transition:background .3s ease, color .3s ease;
+}
+h1,h2,h3{font-family:var(--font-display);}
+a{color:inherit;}
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+  outline:2px solid var(--accent-cyan);
+  outline-offset:2px;
+}
+button{font-family:inherit;}
 
-  body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    line-height: 1.55;
-    transition: background 0.3s ease, color 0.3s ease;
-  }
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(37,99,235,0.28), transparent 32%),
+    radial-gradient(circle at 85% 5%, rgba(34,211,238,0.16), transparent 28%),
+    radial-gradient(circle at 50% 90%, rgba(96,165,250,0.16), transparent 32%),
+    linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-deep-2) 100%);
+  z-index:-1;
+  pointer-events:none;
+  transition:background .3s ease;
+}
 
-  h1, h2, h3 { font-family: 'Space Grotesk', system-ui, sans-serif; }
+.orb{position:fixed; border-radius:50%; filter:blur(60px); opacity:0.24; pointer-events:none; z-index:-1; animation:driftOrb 14s ease-in-out infinite;}
+.orb.o1{width:260px;height:260px;background:var(--accent);top:8%;left:6%;}
+.orb.o2{width:200px;height:200px;background:var(--accent-cyan);top:55%;right:8%;animation-delay:-4s;}
+.orb.o3{width:180px;height:180px;background:var(--accent-light);bottom:4%;left:35%;animation-delay:-8s;}
+@keyframes driftOrb{0%,100%{transform:translate(0,0);}50%{transform:translate(24px,-22px);}}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+}
 
-  a { color: inherit; }
-  a:focus-visible, button:focus-visible, input:focus-visible {
-    outline: 3px solid var(--accent-dark);
-    outline-offset: 2px;
-  }
+/* ---------- announcement banner ---------- */
+.announcement-banner{
+  background:linear-gradient(90deg, var(--accent), var(--accent-cyan));
+  color:#fff; text-align:center; padding:10px 44px 10px 20px;
+  font-size:0.9rem; position:relative; z-index:150;
+  display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap;
+}
+.announcement-banner.hidden{display:none;}
+.announcement-banner button.small{
+  background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.4); color:#fff;
+  border-radius:8px; padding:4px 12px; font-size:0.8rem; cursor:pointer;
+}
+.announcement-close{position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; color:#fff; font-size:1.2rem; cursor:pointer; opacity:0.85;}
 
-  section { scroll-margin-top: 76px; }
+/* ---------- header / nav ---------- */
+header.topbar{
+  position:sticky; top:0;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:16px 30px;
+  background:rgba(10,14,26,0.82);
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  z-index:200; gap:16px; flex-wrap:wrap;
+  transition:background .3s ease;
+}
+html.light header.topbar{background:rgba(255,255,255,0.75);}
+.logo{font-family:var(--font-display); font-size:24px; font-weight:700; display:flex; align-items:center; gap:10px; white-space:nowrap;}
+.logo .mark{width:30px;height:30px;flex-shrink:0;transition:transform .4s ease;}
+.logo:hover .mark{transform:rotate(180deg) scale(1.08);}
 
-  /* Nav */
-  nav {
-    background: var(--card);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    border-bottom: 1px solid var(--line);
-  }
-  .nav-content {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 24px;
-    gap: 16px;
-  }
-  .logo {
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .logo-mark { width: 30px; height: 30px; flex-shrink: 0; transition: transform 0.4s ease; }
-  .logo:hover .logo-mark { transform: rotate(180deg) scale(1.08); }
-  .nav-links {
-    display: flex;
-    gap: 22px;
-    list-style: none;
-    flex-wrap: wrap;
-  }
-  .nav-links a {
-    text-decoration: none;
-    color: var(--ink-soft);
-    font-size: 0.95rem;
-    font-weight: 500;
-    padding: 4px 2px;
-    border-bottom: 2px solid transparent;
-    position: relative;
-    transition: color 0.2s ease;
-  }
-  .nav-links a::after {
-    content: '';
-    position: absolute;
-    left: 0; bottom: -2px;
-    width: 100%; height: 2px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.25s ease;
-  }
-  .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
-  .nav-links a.active, .nav-links a:hover { color: var(--ink); border-color: var(--accent); }
-  .theme-toggle {
-    background: none;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 6px 10px;
-    cursor: pointer;
-    font-size: 1rem;
-    color: var(--ink);
-    transition: transform 0.3s ease, background 0.2s ease;
-  }
-  .theme-toggle:hover { transform: rotate(25deg) scale(1.1); background: var(--paper); }
-  .theme-toggle:active { transform: rotate(180deg) scale(0.95); }
+nav.mainnav{display:flex; gap:8px; flex-wrap:wrap;}
+nav.mainnav button{
+  background:transparent; color:var(--text); border:1px solid var(--border);
+  padding:9px 18px; border-radius:12px; cursor:pointer; font-weight:500; font-size:0.95rem;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+}
+nav.mainnav button:hover{background:rgba(37,99,235,0.18); border-color:var(--accent-light);}
+nav.mainnav button.active{background:var(--accent); border-color:var(--accent); color:#fff; box-shadow:0 6px 18px rgba(37,99,235,0.35);}
 
-  /* Hero */
-  header.hero {
-    background: linear-gradient(160deg, var(--ink) 0%, #1c2836 100%);
-    color: #f2f4f2;
-    padding: 88px 24px 96px;
-    text-align: center;
-  }
-  html.dark header.hero { background: linear-gradient(160deg, #0a0e13 0%, #141c24 100%); }
-  .hero-mark { width: 56px; height: 56px; margin-bottom: 18px; animation: float 3.2s ease-in-out infinite; }
-  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-  header.hero h1 {
-    font-size: clamp(2.2rem, 5vw, 3.2rem);
-    font-weight: 700;
-    margin-bottom: 14px;
-  }
-  header.hero .subtitle {
-    font-size: 1.15rem;
-    max-width: 620px;
-    margin: 0 auto;
-    color: #c7ccd1;
-  }
+.header-right{display:flex; align-items:center; gap:10px;}
+.icon-btn{
+  background:var(--glass); border:1px solid var(--border); border-radius:12px; padding:9px 13px;
+  cursor:pointer; color:var(--text); font-weight:600; font-size:0.9rem;
+  display:flex; align-items:center; gap:6px; transition:transform .2s ease, border-color .2s ease; position:relative;
+}
+.icon-btn:hover{border-color:var(--accent-light); transform:translateY(-1px);}
+.cart-count-badge{
+  background:var(--accent-cyan); color:#03202b; font-size:0.72rem; font-weight:700;
+  border-radius:999px; min-width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center; padding:0 4px;
+}
+.account-panel{position:relative;}
+.account-dropdown{
+  position:absolute; top:calc(100% + 8px); right:0;
+  background:var(--surface-solid); border:1px solid var(--border); border-radius:12px;
+  padding:8px; min-width:180px; box-shadow:0 18px 40px rgba(0,0,0,0.3);
+  display:none; flex-direction:column; z-index:250;
+}
+.account-dropdown.open{display:flex;}
+.account-dropdown button{background:none; border:none; text-align:left; padding:9px 10px; border-radius:8px; cursor:pointer; font-size:0.9rem; color:var(--text);}
+.account-dropdown button:hover{background:rgba(120,140,200,0.14);}
 
-  .main-content {
-    max-width: 1100px;
-    margin: -48px auto 0;
-    padding: 0 24px;
-    position: relative;
-    z-index: 2;
-  }
+/* ---------- pages ---------- */
+main{flex:1; position:relative;}
+.page{position:absolute; top:0; left:0; width:100%; opacity:0; visibility:hidden; transition:opacity .4s cubic-bezier(.4,0,.2,1), transform .4s cubic-bezier(.4,0,.2,1); transform:translateY(8px); padding-bottom:70px;}
+.page.active{opacity:1; visibility:visible; position:relative; transform:translateY(0);}
 
-  .notice {
-    max-width: 780px;
-    margin: 0 auto 48px;
-    padding: 18px 24px;
-    background: var(--warn-bg);
-    border-left: 4px solid var(--warn-line);
-    border-radius: 8px;
-    font-size: 0.98rem;
-  }
+.hero{text-align:center; padding:90px 20px 60px; max-width:980px; margin:0 auto;}
+.hero .eyebrow{
+  display:inline-flex; align-items:center; gap:8px; font-size:0.82rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;
+  color:var(--accent-cyan); background:rgba(34,211,238,0.1); border:1px solid rgba(34,211,238,0.3); padding:6px 14px; border-radius:999px; margin-bottom:22px;
+}
+.hero h1{
+  font-size:clamp(2.6rem, 6vw, 4.4rem); font-weight:700; line-height:1.05; margin-bottom:18px;
+  background:linear-gradient(100deg,#93c5fd,#60a5fa 40%,#22d3ee 80%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.hero p.subtitle{font-size:1.2rem; color:var(--text-soft); max-width:620px; margin:0 auto 34px;}
+.actions{display:flex; justify-content:center; gap:14px; flex-wrap:wrap;}
+.actions button{padding:14px 28px; border:none; border-radius:14px; cursor:pointer; font-size:1rem; font-weight:600; transition:all .3s cubic-bezier(.4,0,.2,1); font-family:var(--font-body);}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-light)); color:#fff;}
+.btn-primary:hover{transform:translateY(-3px); box-shadow:0 14px 28px rgba(37,99,235,0.35);}
+.btn-secondary{background:var(--glass); color:var(--text); border:1px solid var(--border);}
+.btn-secondary:hover{background:rgba(120,140,200,0.16); transform:translateY(-2px);}
 
-  .how-to {
-    max-width: 780px;
-    margin: 0 auto 56px;
-  }
-  .how-to summary {
-    cursor: pointer;
-    font-weight: 600;
-    padding: 14px 20px;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .how-to summary::after {
-    content: '▾';
-    transition: transform 0.3s ease;
-    color: var(--accent-dark);
-  }
-  .how-to[open] summary::after { transform: rotate(180deg); }
-  .how-to summary::-webkit-details-marker { display: none; }
-  .how-to[open] summary { border-radius: 10px 10px 0 0; border-bottom: none; }
-  .how-to ol {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-top: none;
-    border-radius: 0 0 10px 10px;
-    padding: 20px 20px 20px 40px;
-  }
+.section-title{text-align:center; font-size:2.2rem; margin:56px 0 12px; background:linear-gradient(90deg,#93c5fd,#c4d0ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;}
+html.light .section-title{background:linear-gradient(90deg,#2563eb,#0891b2); -webkit-background-clip:text; background-clip:text;}
+.section-sub{text-align:center; color:var(--text-mute); max-width:560px; margin:0 auto 36px; font-size:0.98rem;}
 
-  /* Feature strip */
-  .features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin: 0 0 64px;
-  }
-  .feature-card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 24px;
-    text-align: center;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-  }
-  .feature-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 32px rgba(0,0,0,0.08);
-    border-color: var(--accent);
-  }
-  .feature-card .icon { font-size: 1.8rem; margin-bottom: 10px; display: inline-block; transition: transform 0.3s ease; }
-  .feature-card:hover .icon { transform: scale(1.2) rotate(-6deg); }
-  .feature-card h3 { font-size: 1.05rem; margin-bottom: 6px; }
-  .feature-card p { color: var(--ink-soft); font-size: 0.9rem; }
+.grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:22px; padding:0 30px; max-width:1240px; margin:0 auto;}
 
-  h2.section-title {
-    text-align: center;
-    margin: 0 0 32px;
-    font-size: 1.8rem;
-  }
+.glass-card{background:var(--glass); border:1px solid var(--border); border-radius:var(--radius); padding:26px; backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); transition:all .3s cubic-bezier(.4,0,.2,1);}
+.glass-card:hover{transform:translateY(-7px); border-color:var(--accent-light); box-shadow:0 22px 40px -12px rgba(0,0,0,0.3);}
+.glass-card .icon{font-size:2.6rem; margin-bottom:14px; display:inline-block; transition:transform .3s ease;}
+.glass-card:hover .icon{transform:scale(1.15) rotate(-6deg);}
+.glass-card h3{font-size:1.25rem; margin-bottom:10px;}
+.glass-card p{color:var(--text-soft); font-size:0.95rem;}
+.glass-card .cta-btn{margin-top:18px; width:100%; padding:12px; border:none; border-radius:12px; background:var(--accent); color:#fff; cursor:pointer; font-weight:600; font-size:0.95rem; transition:background .2s ease, transform .15s ease;}
+.glass-card .cta-btn:hover{background:var(--accent-light);}
 
-  .items-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
-    margin-bottom: 64px;
-  }
+.project-card img{width:100%; height:170px; object-fit:cover; border-radius:14px; margin-bottom:16px; border:1px solid var(--border);}
+.status-pill{display:inline-block; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; padding:4px 11px; border-radius:999px; margin-bottom:12px;}
+.status-live{color:#86efac; background:rgba(34,197,94,0.14); border:1px solid rgba(34,197,94,0.35);}
+.status-upcoming{color:#fcd34d; background:rgba(217,164,6,0.14); border:1px solid rgba(217,164,6,0.35);}
+.upcoming-block{margin-top:20px;}
 
-  .item {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    position: relative;
-    opacity: 0;
-    transform: translateY(14px);
-    animation: fadeInUp 0.6s ease forwards;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .item:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,0,0,0.08); }
-  @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-  @media (prefers-reduced-motion: reduce) {
-    .item { opacity: 1; transform: none; animation: none; }
-  }
+.social-card{text-align:center;}
+.social-card .icon{font-size:3rem;}
+.social-card .handle{font-family:var(--font-display); font-size:1.05rem; color:var(--accent-cyan); margin:8px 0 14px;}
+.copy-row{display:flex; gap:8px; justify-content:center; flex-wrap:wrap;}
+.copy-row button.small{background:var(--glass); border:1px solid var(--border); color:var(--text-soft); border-radius:8px; padding:6px 12px; font-size:0.8rem; cursor:pointer;}
+.copy-row button.small:hover{border-color:var(--accent-light);}
 
-  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
-  .badge {
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 4px 10px;
-    border-radius: 999px;
-  }
-  .badge-type { color: var(--accent-dark); background: #e6f6ee; }
-  html.dark .badge-type { background: #113325; }
-  .badge-popular { color: #92400e; background: #fef3c7; }
-  html.dark .badge-popular { color: #fcd34d; background: #3a2a05; }
-  .badge-soldout { color: #991b1b; background: #fee2e2; }
-  html.dark .badge-soldout { color: #fca5a5; background: #3a1414; }
+.shop-notice{max-width:780px; margin:0 auto 30px; padding:16px 22px; background:var(--warn-bg); border-left:4px solid var(--warn-line); border-radius:10px; font-size:0.94rem; color:var(--text-soft);}
+.how-to{max-width:780px; margin:0 auto 40px;}
+.how-to summary{cursor:pointer; font-weight:600; padding:14px 20px; background:var(--glass); border:1px solid var(--border); border-radius:12px; list-style:none; display:flex; justify-content:space-between; align-items:center;}
+.how-to summary::after{content:'▾'; transition:transform .3s ease; color:var(--accent-light);}
+.how-to[open] summary::after{transform:rotate(180deg);}
+.how-to[open] summary{border-radius:12px 12px 0 0; border-bottom:none;}
+.how-to summary::-webkit-details-marker{display:none;}
+.how-to ol{background:var(--glass); border:1px solid var(--border); border-top:none; border-radius:0 0 12px 12px; padding:18px 18px 18px 38px; color:var(--text-soft); font-size:0.94rem;}
+.how-to ol li{margin-bottom:6px;}
 
-  .item .icon-wrap {
-    width: 48px; height: 48px;
-    border-radius: 12px;
-    background: #e6f6ee;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem;
-    transition: transform 0.35s ease, border-radius 0.35s ease;
-  }
-  .item:hover .icon-wrap { transform: rotate(8deg) scale(1.1); border-radius: 16px; }
-  html.dark .item .icon-wrap { background: #113325; }
+.stats-bar{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:18px; padding:0 30px; max-width:1000px; margin:0 auto 50px;}
+.stat-card{background:var(--glass); border:1px solid var(--border); border-radius:var(--radius-sm); padding:20px; text-align:center;}
+.stat-card .num{font-size:1.5rem; font-weight:700; color:var(--accent-light); font-family:var(--font-display);}
+.stat-card .label{font-size:0.8rem; color:var(--text-mute); margin-top:4px;}
 
-  @keyframes pulse-badge { 0%,100% { box-shadow: 0 0 0 0 rgba(146,64,14,0.25); } 50% { box-shadow: 0 0 0 5px rgba(146,64,14,0); } }
-  .badge-popular { animation: pulse-badge 2.2s ease-in-out infinite; }
+.search-wrap{max-width:420px; margin:0 auto 30px; position:relative;}
+.search-wrap input{width:100%; padding:12px 16px 12px 40px; border-radius:12px; border:1px solid var(--border); background:var(--glass); color:var(--text); font-size:0.94rem;}
+.search-wrap::before{content:'🔍'; position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:0.9rem; pointer-events:none;}
 
-  .item h3 { font-size: 1.15rem; }
-  .item p.desc { color: var(--ink-soft); font-size: 0.95rem; flex-grow: 1; }
+.new-products-banner{max-width:780px; margin:0 auto 24px; background:rgba(37,99,235,0.14); border:1px solid var(--accent-light); border-radius:12px; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;}
+.new-products-banner button{background:none; border:1px solid var(--accent-light); border-radius:8px; padding:5px 12px; cursor:pointer; color:var(--accent-light); font-size:0.85rem;}
 
-  .price {
-    font-size: 1.7rem;
-    font-weight: 700;
-    color: var(--accent-dark);
-  }
-  .price .unit { font-size: 0.9rem; font-weight: 500; color: var(--ink-soft); }
+.badge-row{display:flex; gap:8px; flex-wrap:wrap;}
+.badge{font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; padding:4px 10px; border-radius:999px;}
+.badge-type{color:var(--accent-cyan); background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.3);}
+.badge-popular{color:#d9a406; background:rgba(217,164,6,0.14); border:1px solid rgba(217,164,6,0.35); animation:pulseBadge 2.2s ease-in-out infinite;}
+.badge-soldout{color:#dc2626; background:rgba(220,38,38,0.14); border:1px solid rgba(220,38,38,0.35);}
+.badge-hidden{color:#a3720a; background:var(--warn-bg); border:1px solid var(--warn-line);}
+@keyframes pulseBadge{0%,100%{box-shadow:0 0 0 0 rgba(217,164,6,0.25);}50%{box-shadow:0 0 0 5px rgba(217,164,6,0);}}
 
-  button.buy {
-    background: var(--accent);
-    color: #fff;
-    padding: 13px 20px;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 600;
-    width: 100%;
-    cursor: pointer;
-    transition: background 0.2s ease, opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    position: relative;
-    overflow: hidden;
-  }
-  button.buy::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -75%;
-    width: 50%; height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
-    transform: skewX(-20deg);
-    transition: left 0.6s ease;
-  }
-  button.buy:hover:not(:disabled)::before { left: 125%; }
-  button.buy:hover:not(:disabled) { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(14,169,104,0.3); }
-  button.buy:active:not(:disabled) { transform: translateY(0) scale(0.98); }
-  button.buy:disabled { background: #9aa1a6; cursor: not-allowed; }
+.item{position:relative; display:flex; flex-direction:column; gap:10px;}
+.item .icon-wrap{width:48px; height:48px; border-radius:14px; background:rgba(37,99,235,0.16); display:flex; align-items:center; justify-content:center; font-size:1.4rem; transition:transform .35s ease, border-radius .35s ease;}
+.item:hover .icon-wrap{transform:rotate(8deg) scale(1.1); border-radius:18px;}
+.item h3{font-size:1.1rem;}
+.item p.desc{color:var(--text-mute); font-size:0.92rem; flex-grow:1;}
+.item .price{font-size:1.6rem; font-weight:700; color:var(--accent-light); font-family:var(--font-display);}
+.item .price .unit{font-size:0.85rem; font-weight:500; color:var(--text-mute);}
 
-  .spinner {
-    width: 16px; height: 16px;
-    border: 2px solid rgba(255,255,255,0.4);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    display: none;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
+.qty-row{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.qty-stepper{display:flex; align-items:center; gap:10px;}
+.qty-stepper button{width:28px; height:28px; border-radius:8px; border:1px solid var(--border); background:var(--glass); color:var(--text); cursor:pointer; font-size:1rem; line-height:1;}
+.qty-stepper button:hover{border-color:var(--accent-light);}
+.qty-stepper span{min-width:16px; text-align:center; font-weight:600;}
 
-  .discord-line {
-    font-size: 0.82rem;
-    color: var(--ink-soft);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .discord-line button {
-    background: none;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 2px 8px;
-    font-size: 0.78rem;
-    cursor: pointer;
-    color: var(--ink-soft);
-  }
+button.buy{background:var(--accent); color:#fff; padding:13px 20px; border:none; border-radius:12px; font-size:1rem; font-weight:600; width:100%; cursor:pointer; transition:background .2s ease, transform .15s ease, box-shadow .2s ease; display:flex; align-items:center; justify-content:center; gap:8px; position:relative; overflow:hidden;}
+button.buy::before{content:''; position:absolute; top:0; left:-75%; width:50%; height:100%; background:linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent); transform:skewX(-20deg); transition:left .6s ease;}
+button.buy:hover:not(:disabled)::before{left:125%;}
+button.buy:hover:not(:disabled){background:var(--accent-light); transform:translateY(-2px); box-shadow:0 12px 22px rgba(37,99,235,0.35);}
+button.buy:active:not(:disabled){transform:translateY(0) scale(0.98);}
+button.buy:disabled{background:#6b7280; cursor:not-allowed;}
 
-  /* FAQ */
-  .faq { max-width: 780px; margin: 0 auto 64px; display: flex; flex-direction: column; gap: 12px; }
-  .faq details {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 4px 20px;
-  }
-  .faq summary {
-    cursor: pointer;
-    padding: 16px 0;
-    font-weight: 600;
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: color 0.2s ease;
-  }
-  .faq summary::after {
-    content: '+';
-    font-size: 1.3rem;
-    color: var(--accent-dark);
-    transition: transform 0.3s ease;
-  }
-  .faq details[open] summary::after { transform: rotate(45deg); }
-  .faq details:hover summary { color: var(--accent-dark); }
-  .faq summary::-webkit-details-marker { display: none; }
-  .faq p { padding: 0 0 18px; color: var(--ink-soft); font-size: 0.95rem; }
+.discord-line{font-size:0.8rem; color:var(--text-mute); display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
+.discord-line button{background:none; border:1px solid var(--border); border-radius:6px; padding:2px 8px; font-size:0.76rem; cursor:pointer; color:var(--text-mute);}
 
-  .policy-section {
-    max-width: 780px;
-    margin: 0 auto 32px;
-    padding: 28px;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    font-size: 0.92rem;
-    color: var(--ink-soft);
-  }
-  .policy-section h3 { color: var(--ink); font-size: 1.15rem; margin-bottom: 10px; }
-  .policy-section ul { margin: 8px 0 8px 20px; }
+.wishlist-btn{position:absolute; top:14px; right:14px; background:rgba(10,14,26,0.6); border:1px solid var(--border); border-radius:50%; width:34px; height:34px; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; transition:transform .2s ease;}
+html.light .wishlist-btn{background:rgba(255,255,255,0.75);}
+.wishlist-btn:hover{transform:scale(1.15);}
+.wishlist-btn.active{color:#f87171; border-color:#f87171;}
 
-  .policies-wrap { margin-bottom: 64px; }
+.review-box{border-top:1px solid var(--border); padding-top:10px; margin-top:2px;}
+.review-summary{display:flex; align-items:center; gap:8px; font-size:0.84rem; color:var(--text-mute); flex-wrap:wrap;}
+.review-toggle{background:none; border:none; color:var(--accent-light); font-size:0.84rem; cursor:pointer; font-weight:600; padding:0;}
+.review-form{display:none; flex-direction:column; gap:8px; margin-top:10px;}
+.review-form.open{display:flex;}
+.star-input{display:flex; gap:4px; font-size:1.25rem; cursor:pointer;}
+.star-input span{color:var(--border); transition:color .15s ease;}
+.star-input span.filled{color:#fbbf24;}
+.review-form textarea{resize:vertical; min-height:58px; padding:8px 10px; border-radius:8px; border:1px solid var(--border); font-size:0.86rem; font-family:inherit; background:var(--glass); color:var(--text);}
+.review-form button.submit-review{background:var(--accent); color:#fff; border:none; border-radius:8px; padding:9px; font-weight:600; cursor:pointer; font-size:0.86rem;}
+.review-list{margin-top:8px; display:flex; flex-direction:column; gap:8px; max-height:130px; overflow-y:auto;}
+.review-entry{font-size:0.8rem; color:var(--text-mute); border-bottom:1px dashed var(--border); padding-bottom:6px;}
+.review-entry .stars{color:#fbbf24;}
 
-  footer {
-    background: var(--ink);
-    color: #9aa3ab;
-    text-align: center;
-    padding: 48px 24px 32px;
-    font-size: 0.9rem;
-    margin-top: 40px;
-  }
-  html.dark footer { background: #060a0e; }
-  footer p { margin-bottom: 6px; }
+.empty-state{text-align:center; color:var(--text-mute); padding:20px; font-size:0.95rem;}
 
-  /* Modal */
-  #tos-modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(18,24,31,0.85);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 20px;
-  }
-  .modal-content {
-    background: var(--card);
-    padding: 36px 32px;
-    max-width: 480px;
-    width: 100%;
-    border-radius: var(--radius);
-  }
-  .modal-content h2 { font-size: 1.5rem; margin-bottom: 6px; }
-  .modal-content .lead { color: var(--ink-soft); font-size: 0.95rem; margin-bottom: 20px; }
-  .modal-terms {
-    background: var(--paper);
-    padding: 18px 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    font-size: 0.92rem;
-    text-align: left;
-  }
-  .modal-terms li { margin-left: 18px; margin-bottom: 6px; }
-  .agree-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 0.95rem;
-    margin-bottom: 22px;
-    text-align: left;
-  }
-  .agree-row input { margin-top: 3px; }
-  #enter-btn {
-    background: var(--accent);
-    color: #fff;
-    padding: 14px 28px;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.05rem;
-    font-weight: 600;
-    width: 100%;
-    cursor: pointer;
-  }
-  #enter-btn:disabled { background: #b7bcb9; cursor: not-allowed; }
-  #enter-btn:not(:disabled):hover { background: var(--accent-dark); }
+#admin-panel{background:var(--glass); border:2px dashed var(--accent-light); border-radius:var(--radius); padding:24px; margin:0 30px 32px; max-width:1180px; margin-left:auto; margin-right:auto;}
+.admin-action-btn{background:var(--accent); color:#fff; border:none; border-radius:10px; padding:10px 18px; font-weight:600; cursor:pointer; font-size:0.9rem;}
+.admin-action-btn:hover{background:var(--accent-light);}
+.admin-action-btn.secondary{background:#374151;}
+.item-hidden{opacity:0.55; border-style:dashed;}
 
-  /* Toast notifications */
-  #toast-stack {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    z-index: 2000;
-  }
-  .toast {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-left: 4px solid var(--accent);
-    border-radius: 10px;
-    padding: 14px 18px;
-    font-size: 0.9rem;
-    max-width: 280px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    animation: toastIn 0.3s ease forwards;
-  }
-  .toast.error { border-left-color: #dc2626; }
-  @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+.policy-wrap{max-width:780px; margin:50px auto 0;}
+.policy-card{background:var(--glass); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:16px; font-size:0.92rem; color:var(--text-soft);}
+.policy-card h3{color:var(--text); font-size:1.1rem; margin-bottom:8px;}
+.policy-card ul{margin:8px 0 0 20px;}
+.faq-wrap{max-width:780px; margin:0 auto 20px; display:flex; flex-direction:column; gap:10px;}
+.faq-wrap details{background:var(--glass); border:1px solid var(--border); border-radius:12px; padding:2px 20px;}
+.faq-wrap summary{cursor:pointer; padding:15px 0; font-weight:600; list-style:none; display:flex; justify-content:space-between; align-items:center;}
+.faq-wrap summary::after{content:'+'; font-size:1.2rem; color:var(--accent-light); transition:transform .3s ease;}
+.faq-wrap details[open] summary::after{transform:rotate(45deg);}
+.faq-wrap summary::-webkit-details-marker{display:none;}
+.faq-wrap p{padding:0 0 16px; color:var(--text-mute); font-size:0.92rem;}
 
-  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
+.contact-container{max-width:600px; margin:40px auto; padding:38px; background:var(--glass); border:1px solid var(--border); border-radius:var(--radius);}
+.contact-container input, .contact-container textarea{width:100%; padding:13px; margin-bottom:14px; background:var(--glass-strong); border:1px solid var(--border); border-radius:12px; color:var(--text); font-size:0.96rem; font-family:inherit;}
+.contact-container button{width:100%; padding:14px; background:var(--accent); color:#fff; border:none; border-radius:12px; font-size:1rem; font-weight:600; cursor:pointer;}
+.contact-container button:hover{background:var(--accent-light);}
 
-  header.hero { position: relative; overflow: hidden; z-index: 0; }
-  .hero-blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(50px);
-    opacity: 0.35;
-    pointer-events: none;
-    animation: drift 9s ease-in-out infinite;
-  }
-  .hero-blob.b1 { width: 220px; height: 220px; background: var(--accent); top: -60px; left: 8%; }
-  .hero-blob.b2 { width: 160px; height: 160px; background: #2dd4bf; bottom: -50px; right: 10%; animation-delay: -3s; }
-  @keyframes drift { 0%,100% { transform: translate(0,0); } 50% { transform: translate(20px,-15px); } }
-  header.hero > * { position: relative; z-index: 1; }
+footer{padding:30px; text-align:center; color:var(--text-mute); border-top:1px solid var(--border); margin-top:auto; font-size:0.9rem;}
+footer p{margin-bottom:4px;}
 
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.001ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.001ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
+/* ---------- modals (welcome / shop terms / account) ---------- */
+.modal-overlay{position:fixed; inset:0; background:rgba(6,9,18,0.85); display:none; align-items:center; justify-content:center; z-index:1000; padding:20px;}
+html.light .modal-overlay{background:rgba(15,23,42,0.4);}
+.modal-overlay.open{display:flex;}
+.modal-content{background:var(--surface-solid); border:1px solid var(--border); padding:34px 30px; max-width:460px; width:100%; border-radius:var(--radius); position:relative;}
+.modal-content h2{font-size:1.5rem; margin-bottom:6px;}
+.modal-content .lead{color:var(--text-mute); font-size:0.94rem; margin-bottom:18px;}
+.modal-terms{background:var(--glass); padding:16px 18px; border-radius:10px; margin-bottom:18px; font-size:0.9rem; text-align:left; color:var(--text-soft);}
+.modal-terms li{margin-left:18px; margin-bottom:6px;}
+.agree-row{display:flex; align-items:flex-start; gap:10px; font-size:0.92rem; margin-bottom:20px; text-align:left; color:var(--text-soft);}
+.agree-row input{margin-top:3px;}
+.modal-btn{background:var(--accent); color:#fff; padding:14px 26px; border:none; border-radius:12px; font-size:1.02rem; font-weight:600; width:100%; cursor:pointer;}
+.modal-btn:disabled{background:#4b5266; cursor:not-allowed;}
+.modal-btn:not(:disabled):hover{background:var(--accent-light);}
 
+.account-tabs{display:flex; gap:8px; margin-bottom:18px;}
+.account-tab{flex:1; padding:10px; text-align:center; cursor:pointer; border-radius:10px; border:1px solid var(--border); font-weight:600; font-size:0.88rem; color:var(--text-mute); background:var(--glass);}
+.account-tab.active{background:var(--accent); color:#fff; border-color:var(--accent);}
+.account-form{display:none; flex-direction:column; gap:12px;}
+.account-form.active{display:flex;}
+.account-form input{padding:11px 14px; border:1px solid var(--border); border-radius:10px; font-size:0.94rem; background:var(--glass); color:var(--text);}
+.account-form button{background:var(--accent); color:#fff; border:none; border-radius:10px; padding:12px; font-weight:600; cursor:pointer;}
+.account-form button:hover{background:var(--accent-light);}
+.account-note{font-size:0.76rem; color:var(--text-mute); margin-top:6px;}
+.account-error{font-size:0.83rem; color:#f87171; min-height:1.1em;}
+.close-modal-x{position:absolute; top:14px; right:16px; background:none; border:none; font-size:1.3rem; cursor:pointer; color:var(--text-mute);}
 
-  @media (max-width: 640px) {
-    button.buy { padding: 15px 20px; font-size: 1.05rem; }
-    .nav-links { display: none; }
-  }
+/* ---------- cart drawer ---------- */
+.cart-backdrop{position:fixed; inset:0; background:rgba(6,9,18,0.55); z-index:1400; display:none;}
+.cart-backdrop.open{display:block;}
+.cart-drawer{position:fixed; top:0; right:-400px; width:380px; max-width:92vw; height:100%; background:var(--surface-solid); border-left:1px solid var(--border); z-index:1500; transition:right .35s cubic-bezier(.4,0,.2,1); display:flex; flex-direction:column; padding:26px 22px; overflow-y:auto;}
+.cart-drawer.open{right:0;}
+.cart-drawer-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;}
+.cart-drawer-header h3{font-size:1.3rem;}
+.cart-items{flex:1;}
+.cart-item{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:12px 0; border-bottom:1px solid var(--border);}
+.cart-item-name{font-weight:600; font-size:0.92rem;}
+.cart-item-sub{color:var(--text-mute); font-size:0.8rem;}
+.cart-footer{padding-top:16px;}
+.cart-total{font-size:1.15rem; font-weight:700; margin-bottom:14px; font-family:var(--font-display);}
 
-  /* Account nav button */
-  .account-btn {
-    background: none;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 6px 12px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--ink);
-    display: flex; align-items: center; gap: 6px;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-  }
-  .account-btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+#toast-stack{position:fixed; bottom:20px; right:20px; display:flex; flex-direction:column; gap:10px; z-index:2000;}
+.toast{background:var(--surface-solid); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:12px; padding:14px 18px; font-size:0.9rem; max-width:280px; color:var(--text); box-shadow:0 12px 30px rgba(0,0,0,0.3); animation:toastIn .3s ease forwards;}
+.toast.error{border-left-color:#dc2626;}
+@keyframes toastIn{from{opacity:0; transform:translateX(20px);}to{opacity:1; transform:translateX(0);}}
 
-  /* Account modal */
-  #account-modal {
-    position: fixed; inset: 0;
-    background: rgba(18,24,31,0.75);
-    display: none;
-    align-items: center; justify-content: center;
-    z-index: 1000; padding: 20px;
-  }
-  #account-modal.open { display: flex; }
-  .account-modal-content {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 32px;
-    max-width: 380px;
-    width: 100%;
-  }
-  .account-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
-  .account-tab {
-    flex: 1; padding: 10px; text-align: center; cursor: pointer;
-    border-radius: 8px; border: 1px solid var(--line);
-    font-weight: 600; font-size: 0.9rem; color: var(--ink-soft);
-    background: var(--paper);
-  }
-  .account-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .account-form { display: none; flex-direction: column; gap: 12px; }
-  .account-form.active { display: flex; }
-  .account-form input {
-    padding: 11px 14px; border: 1px solid var(--line); border-radius: 8px;
-    font-size: 0.95rem; background: var(--paper); color: var(--ink);
-  }
-  .account-form button {
-    background: var(--accent); color: #fff; border: none; border-radius: 8px;
-    padding: 12px; font-weight: 600; cursor: pointer;
-  }
-  .account-form button:hover { background: var(--accent-dark); }
-  .account-note { font-size: 0.78rem; color: var(--ink-soft); margin-top: 4px; }
-  .account-error { font-size: 0.85rem; color: #dc2626; min-height: 1.1em; }
-  .close-modal-x {
-    position: absolute; top: 14px; right: 16px;
-    background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--ink-soft);
-  }
-  .account-panel { position: relative; }
+.hidden{display:none;}
 
-  .account-dropdown {
-    position: absolute; top: calc(100% + 8px); right: 0;
-    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
-    padding: 8px; min-width: 170px; box-shadow: 0 12px 28px rgba(0,0,0,0.14);
-    display: none; flex-direction: column; z-index: 200;
-  }
-  .account-dropdown.open { display: flex; }
-  .account-dropdown button {
-    background: none; border: none; text-align: left; padding: 9px 10px;
-    border-radius: 6px; cursor: pointer; font-size: 0.9rem; color: var(--ink);
-  }
-  .account-dropdown button:hover { background: var(--paper); }
-
-  /* Wishlist heart */
-  .wishlist-btn {
-    position: absolute; top: 14px; right: 14px;
-    background: var(--card); border: 1px solid var(--line); border-radius: 50%;
-    width: 34px; height: 34px; cursor: pointer; font-size: 1rem;
-    display: flex; align-items: center; justify-content: center;
-    transition: transform 0.2s ease;
-  }
-  .wishlist-btn:hover { transform: scale(1.15); }
-  .wishlist-btn.active { color: #dc2626; border-color: #dc2626; }
-
-  /* Search bar */
-  .search-wrap { max-width: 420px; margin: 0 auto 40px; position: relative; }
-  .search-wrap input {
-    width: 100%; padding: 13px 16px 13px 42px; border-radius: 10px;
-    border: 1px solid var(--line); background: var(--card); color: var(--ink); font-size: 0.95rem;
-  }
-  .search-wrap::before {
-    content: '🔍'; position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-    font-size: 0.95rem; pointer-events: none;
-  }
-  .item.hidden-by-search { display: none; }
-
-  /* Reviews */
-  .review-box { border-top: 1px solid var(--line); padding-top: 10px; margin-top: 4px; }
-  .review-summary { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--ink-soft); }
-  .review-toggle {
-    background: none; border: none; color: var(--accent-dark); font-size: 0.85rem;
-    cursor: pointer; font-weight: 600; padding: 0;
-  }
-  .review-form { display: none; flex-direction: column; gap: 8px; margin-top: 10px; }
-  .review-form.open { display: flex; }
-  .star-input { display: flex; gap: 4px; font-size: 1.3rem; cursor: pointer; }
-  .star-input span { color: var(--line); transition: color 0.15s ease; }
-  .star-input span.filled { color: #f59e0b; }
-  .review-form textarea {
-    resize: vertical; min-height: 60px; padding: 8px 10px; border-radius: 8px;
-    border: 1px solid var(--line); font-size: 0.88rem; font-family: inherit;
-    background: var(--paper); color: var(--ink);
-  }
-  .review-form button.submit-review {
-    background: var(--accent); color: #fff; border: none; border-radius: 8px;
-    padding: 9px; font-weight: 600; cursor: pointer; font-size: 0.88rem;
-  }
-  .review-list { margin-top: 8px; display: flex; flex-direction: column; gap: 8px; max-height: 140px; overflow-y: auto; }
-  .review-entry { font-size: 0.82rem; color: var(--ink-soft); border-bottom: 1px dashed var(--line); padding-bottom: 6px; }
-  .review-entry .stars { color: #f59e0b; }
-
-  /* Store stats (real, computed) */
-  .stats-bar {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px; margin-bottom: 64px;
-  }
-  .stat-card {
-    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
-    padding: 22px; text-align: center;
-  }
-  .stat-card .num { font-size: 1.6rem; font-weight: 700; color: var(--accent-dark); font-family: 'Space Grotesk', sans-serif; }
-  .stat-card .label { font-size: 0.82rem; color: var(--ink-soft); margin-top: 4px; }
-  /* Admin panel */
-  #admin-panel {
-    background: var(--card);
-    border: 2px dashed var(--accent);
-    border-radius: var(--radius);
-    padding: 24px;
-    margin-bottom: 32px;
-  }
-  .admin-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 10px;
-  }
-  .admin-grid input, .admin-grid select, .admin-grid textarea {
-    padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px;
-    background: var(--paper); color: var(--ink); font-size: 0.9rem; font-family: inherit;
-  }
-  .admin-grid textarea { min-height: 60px; resize: vertical; }
-  .admin-action-btn {
-    background: var(--accent); color: #fff; border: none; border-radius: 8px;
-    padding: 10px 18px; font-weight: 600; cursor: pointer; font-size: 0.9rem;
-  }
-  .admin-action-btn:hover { background: var(--accent-dark); }
-  .admin-action-btn.secondary { background: var(--ink); }
-  .admin-action-btn.danger { background: #dc2626; }
-  .admin-action-btn.danger:hover { background: #b91c1c; }
-  .admin-delete-btn {
-    position: absolute; top: 14px; left: 14px;
-    background: #dc2626; color: #fff; border: none; border-radius: 50%;
-    width: 28px; height: 28px; cursor: pointer; font-size: 0.85rem;
-  }
-  .admin-vis-btn {
-    background: var(--paper); color: var(--ink); border: 1px solid var(--line);
-    border-radius: 8px; padding: 8px; font-size: 0.85rem; font-weight: 600;
-    cursor: pointer; width: 100%;
-  }
-  .admin-vis-btn:hover { border-color: var(--accent); }
-  .item-hidden { opacity: 0.55; border-style: dashed; }
-  .badge-hidden { color: #6b4e08; background: var(--warn-bg); border: 1px solid var(--warn-line); }
-
-  /* New product banner */
-  .new-products-banner {
-    max-width: 780px; margin: 0 auto 24px;
-    background: #e6f6ee; border: 1px solid var(--accent);
-    border-radius: 10px; padding: 14px 20px;
-    display: flex; align-items: center; justify-content: space-between; gap: 14px;
-    flex-wrap: wrap;
-  }
-  html.dark .new-products-banner { background: #113325; }
-  .new-products-banner button {
-    background: none; border: 1px solid var(--accent-dark); border-radius: 6px;
-    padding: 5px 12px; cursor: pointer; font-size: 0.85rem; color: var(--accent-dark);
-  }
-
-  .empty-state {
-    text-align: center; color: var(--ink-soft); padding: 20px; font-size: 0.95rem;
-  }
-
-  .sync-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 0.78rem; color: var(--ink-soft); margin-top: 6px;
-  }
-  .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: #9aa1a6; }
-  .sync-dot.live { background: var(--accent); animation: pulse-badge 1.6s ease-in-out infinite; }
-  .sync-dot.offline { background: #dc2626; }
+@media (max-width:640px){
+  nav.mainnav{display:none;}
+  button.buy{padding:15px 20px; font-size:1.03rem;}
+  .hero{padding:80px 16px 50px;}
+  .cart-drawer{width:100%;}
+}
 </style>
 </head>
 <body>
 
-  <div id="tos-modal">
-    <div class="modal-content">
-      <h2>Welcome to Loopstock</h2>
-      <p class="lead">Please review before continuing.</p>
-      <ul class="modal-terms">
-        <li>Payments are processed by PayPal.</li>
-        <li>Keep your payment receipt as proof of purchase.</li>
-        <li>Contact support if there's an issue with your order.</li>
-      </ul>
-      <label class="agree-row">
-        <input type="checkbox" id="agree-check">
-        <span>I have read and agree to the <a href="#terms">Terms of Service</a>.</span>
-      </label>
-      <button id="enter-btn" disabled onclick="enterSite()">Enter Site</button>
-    </div>
+<div class="orb o1"></div>
+<div class="orb o2"></div>
+<div class="orb o3"></div>
+
+<!-- Welcome modal (site-wide, light touch) -->
+<div id="welcome-modal" class="modal-overlay">
+  <div class="modal-content">
+    <h2>👋 Welcome to ZANVERSE</h2>
+    <p class="lead">Projects, socials, and the shop — all in one place. Have a look around!</p>
+    <button class="modal-btn" onclick="enterSite()">Let's go 🚀</button>
   </div>
+</div>
 
-  <div id="toast-stack" aria-live="polite"></div>
-
-  <div id="account-modal">
-    <div class="account-modal-content" style="position:relative;">
-      <button class="close-modal-x" onclick="closeAccountModal()" aria-label="Close">&times;</button>
-      <h2 style="margin-bottom:16px;">Your Account</h2>
-      <div class="account-tabs">
-        <div class="account-tab active" id="tab-login" onclick="switchAccountTab('login')">Log In</div>
-        <div class="account-tab" id="tab-register" onclick="switchAccountTab('register')">Register</div>
-      </div>
-      <form class="account-form active" id="login-form" onsubmit="return handleLogin(event)">
-        <input type="text" id="login-username" placeholder="Username" required>
-        <input type="password" id="login-password" placeholder="Password" required>
-        <div class="account-error" id="login-error"></div>
-        <button type="submit">Log In</button>
-      </form>
-      <form class="account-form" id="register-form" onsubmit="return handleRegister(event)">
-        <input type="text" id="register-username" placeholder="Choose a username" required>
-        <input type="password" id="register-password" placeholder="Choose a password" required>
-        <div class="account-error" id="register-error"></div>
-        <button type="submit">Create Account</button>
-      </form>
-      <p class="account-note">This is a browser-only demo account system (stored on your device) — it's not a secure server login. Don't reuse a real password here.</p>
-    </div>
+<!-- Shop-only terms modal -->
+<div id="shop-tos-modal" class="modal-overlay">
+  <div class="modal-content">
+    <h2>🛍️ Before you shop</h2>
+    <p class="lead">Quick heads-up about how orders work here.</p>
+    <ul class="modal-terms">
+      <li>Payments are processed through PayPal.</li>
+      <li>Keep your payment receipt as proof of purchase.</li>
+      <li>Delivery happens through Discord — details are on this page.</li>
+    </ul>
+    <label class="agree-row">
+      <input type="checkbox" id="shop-agree-check">
+      <span>Got it — I'm ready to shop.</span>
+    </label>
+    <button class="modal-btn" id="shop-enter-btn" disabled onclick="enterShop()">Continue to Shop</button>
   </div>
+</div>
 
-  <nav>
-    <div class="nav-content">
-      <div class="logo">
-        <svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true">
-          <rect width="100" height="100" rx="24" fill="var(--accent)"/>
-          <path d="M25,50 C25,37 36,37 50,50 C64,63 75,63 75,50 C75,37 64,37 50,50 C36,63 25,63 25,50 Z"
-                fill="none" stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>Loopstock</span>
-      </div>
-      <ul class="nav-links">
-        <li><a href="#top" class="nav-link" data-target="top">Home</a></li>
-        <li><a href="#products" class="nav-link" data-target="products">Products</a></li>
-        <li><a href="#faq" class="nav-link" data-target="faq">FAQ</a></li>
-        <li><a href="#terms" class="nav-link" data-target="terms">Terms</a></li>
-        <li><a href="#contact" class="nav-link" data-target="contact">Contact</a></li>
-      </ul>
-      <div class="account-panel">
-        <button class="account-btn" id="account-btn" onclick="onAccountBtnClick()">🔐 <span id="account-btn-label">Account</span></button>
-        <div class="account-dropdown" id="account-dropdown">
-          <button onclick="toggleView('wishlist')">❤️ Wishlist</button>
-          <button onclick="toggleView('purchases')">📝 My Purchases</button>
-          <button onclick="logout()">Log out</button>
-        </div>
-      </div>
-      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
+<div id="toast-stack" aria-live="polite"></div>
+
+<!-- Account modal -->
+<div id="account-modal" class="modal-overlay">
+  <div class="modal-content">
+    <button class="close-modal-x" onclick="closeModal('account-modal')" aria-label="Close">&times;</button>
+    <h2 style="margin-bottom:16px;">Your Account</h2>
+    <div class="account-tabs">
+      <div class="account-tab active" id="tab-login" onclick="switchAccountTab('login')">Log In</div>
+      <div class="account-tab" id="tab-register" onclick="switchAccountTab('register')">Register</div>
     </div>
-  </nav>
+    <form class="account-form active" id="login-form" onsubmit="return handleLogin(event)">
+      <input type="text" id="login-username" placeholder="Username" required>
+      <input type="password" id="login-password" placeholder="Password" required>
+      <div class="account-error" id="login-error"></div>
+      <button type="submit">Log In</button>
+    </form>
+    <form class="account-form" id="register-form" onsubmit="return handleRegister(event)">
+      <input type="text" id="register-username" placeholder="Choose a username" required>
+      <input type="password" id="register-password" placeholder="Choose a password" required>
+      <div class="account-error" id="register-error"></div>
+      <button type="submit">Create Account</button>
+    </form>
+    <p class="account-note">Browser-only demo login (stored on this device) — not a secure server account. Don't reuse a real password here.</p>
+  </div>
+</div>
 
-  <header class="hero" id="top">
-    <div class="hero-blob b1"></div>
-    <div class="hero-blob b2"></div>
-    <svg class="hero-mark" viewBox="0 0 100 100" aria-hidden="true">
-      <rect width="100" height="100" rx="24" fill="var(--accent)"/>
-      <path d="M25,50 C25,37 36,37 50,50 C64,63 75,63 75,50 C75,37 64,37 50,50 C36,63 25,63 25,50 Z"
-            fill="none" stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+<!-- Cart drawer -->
+<div class="cart-backdrop" id="cart-backdrop" onclick="toggleCartDrawer()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-header">
+    <h3>🛒 Your Cart</h3>
+    <button class="close-modal-x" style="position:static;" onclick="toggleCartDrawer()" aria-label="Close cart">&times;</button>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-footer">
+    <div class="cart-total">Total: <span id="cart-total-amt">$0.00</span> CAD</div>
+    <button class="admin-action-btn" style="width:100%;" onclick="checkoutCart()">Checkout with PayPal</button>
+    <p class="account-note">Checkout opens one PayPal payment for your cart total. After paying, message us on Discord with your receipt and item list — same as any order.</p>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="logo">
+    <svg class="mark" viewBox="0 0 100 100" aria-hidden="true">
+      <rect width="100" height="100" rx="24" fill="#2563eb"/>
+      <path d="M25,50 C25,37 36,37 50,50 C64,63 75,63 75,50 C75,37 64,37 50,50 C36,63 25,63 25,50 Z" fill="none" stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-    <h1>Loopstock</h1>
-    <p class="subtitle">Rentals and one-time purchases, delivered fast with clear terms up front.</p>
-  </header>
+    <span>ZANVERSE</span>
+  </div>
+  <nav class="mainnav">
+    <button onclick="showPage('home')" class="active" id="nav-home">🏠 Home</button>
+    <button onclick="showPage('projects')" id="nav-projects">🚀 Projects</button>
+    <button onclick="showPage('shop')" id="nav-shop">🛍️ Shop</button>
+    <button onclick="showPage('socials')" id="nav-socials">🌐 Socials</button>
+    <button onclick="showPage('contact')" id="nav-contact">✉️ Contact</button>
+  </nav>
+  <div class="header-right">
+    <button class="icon-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle dark/light mode">🌙</button>
+    <button class="icon-btn" id="cart-btn" onclick="toggleCartDrawer()" aria-label="Open cart">🛒 <span class="cart-count-badge" id="cart-count">0</span></button>
+    <div class="account-panel">
+      <button class="icon-btn" id="account-btn" onclick="onAccountBtnClick()">🔐 <span id="account-btn-label">Account</span></button>
+      <div class="account-dropdown" id="account-dropdown">
+        <button onclick="toggleView('wishlist')">❤️ Wishlist</button>
+        <button onclick="toggleView('purchases')">📝 My Purchases</button>
+        <button onclick="logout()">🚪 Log out</button>
+      </div>
+    </div>
+  </div>
+</header>
 
-  <div class="main-content">
+<div class="announcement-banner hidden" id="announcement-banner">
+  <span id="announcement-text"></span>
+  <button class="small" id="announcement-link-btn"></button>
+  <button class="announcement-close" onclick="dismissAnnouncement()" aria-label="Dismiss">&times;</button>
+</div>
+
+<main>
+
+  <!-- ============ HOME ============ -->
+  <section id="home" class="page active">
+    <div class="hero">
+      <span class="eyebrow">✨ everything zan makes, one address</span>
+      <h1>Welcome to ZANVERSE</h1>
+      <p class="subtitle">Projects, socials, and the shop — all in one place. Take a look around 👀</p>
+      <div class="actions">
+        <button class="btn-primary" onclick="showPage('projects')">🚀 Explore Projects</button>
+        <button class="btn-secondary" onclick="showPage('shop')">🛍️ Visit Shop</button>
+      </div>
+    </div>
+
+    <h2 class="section-title">Featured</h2>
+    <p class="section-sub">The three places worth checking first.</p>
+    <div class="grid">
+      <div class="glass-card">
+        <div class="icon">🌐</div>
+        <h3>Socials</h3>
+        <p>Discord and Roblox — come say hi, follow along, or hop into a game.</p>
+        <button class="cta-btn" onclick="showPage('socials')">Find me online</button>
+      </div>
+      <div class="glass-card">
+        <div class="icon">🚀</div>
+        <h3>Projects</h3>
+        <p>Live builds plus a look at what's coming up next.</p>
+        <button class="cta-btn" onclick="showPage('projects')">View all projects</button>
+      </div>
+      <div class="glass-card">
+        <div class="icon">🛍️</div>
+        <h3>Shop</h3>
+        <p>Rentals and one-time digital goods, clear pricing, PayPal checkout.</p>
+        <button class="cta-btn" onclick="showPage('shop')">Browse the shop</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects" class="page">
+    <h2 class="section-title">🚀 Projects</h2>
+    <p class="section-sub">Live builds first, then what's cooking next.</p>
+    <div class="grid" id="live-projects-grid"></div>
+
+    <div class="upcoming-block">
+      <h2 class="section-title">🔮 Upcoming Projects</h2>
+      <p class="section-sub">Still in the oven — here's a preview.</p>
+      <div class="grid" id="upcoming-projects-grid"></div>
+    </div>
+  </section>
+
+  <!-- ============ SHOP ============ -->
+  <section id="shop" class="page">
+    <h2 class="section-title">🛍️ Shop</h2>
+    <p class="section-sub">Rentals and one-time purchases with clear pricing and PayPal checkout.</p>
+
     <details class="how-to">
-      <summary onclick="toggleInstructions(event)">📌 How buying works</summary>
+      <summary>📌 How buying works</summary>
       <ol>
-<li>Choose an item below.</li>
-<li>Complete your payment through PayPal.</li>
-<li>Save your payment confirmation.</li>
-<li>Go to Discord and send a direct message to <strong>itz.zan</strong>.</li>
-<li>Send your proof of payment and tell us which item you purchased.</li>
-<li>If the account is offline, please note that delivery may take longer than the usual 10–15 minutes.</li>
-<li>Once everything has been verified, you'll receive your purchased item.</li>
-<li>Thank you for your purchase!</li>
+        <li>Add items to your cart (set quantity if you want more than one).</li>
+        <li>Open the cart and hit Checkout — it opens PayPal with your total.</li>
+        <li>Complete your payment there and save the confirmation.</li>
+        <li>Go to Discord and send a direct message to <strong id="how-to-discord">itz.zan</strong>.</li>
+        <li>Send your proof of payment and tell us which item(s) you got.</li>
+        <li>If the account is offline, delivery may take longer than the usual 10–15 minutes.</li>
+        <li>Once everything's verified, you'll receive your item. Thanks for the support! 🙌</li>
       </ol>
     </details>
 
-    <div class="notice">
-      <strong>Note:</strong> All prices are listed in Canadian Dollars (CAD). If you're paying from another country, your bank or PayPal may apply a currency conversion.
-    </div>
-
-    <div class="features">
-      <div class="feature-card reveal">
-        <div class="icon">⚡</div>
-        <h3>Fast Delivery</h3>
-        <p>Orders are delivered promptly after payment is confirmed. (10-15 mins)</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="icon">🔒</div>
-        <h3>Secure Payments</h3>
-        <p>All transactions are processed through PayPal's payment system.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="icon">💬</div>
-        <h3>Direct Support</h3>
-        <p>Reach out any time with questions about your order. (please use discord to reach out)</p>
-      </div>
+    <div class="shop-notice">
+      <strong>💵 Note:</strong> All prices are listed in Canadian Dollars (CAD). If you're paying from another country, your bank or PayPal may apply a currency conversion.
     </div>
 
     <div class="stats-bar" id="stats-bar">
@@ -843,627 +551,739 @@
       <div class="stat-card"><div class="num" id="stat-wishlisted">0</div><div class="label">Times Wishlisted (you)</div></div>
     </div>
 
-    <section id="products">
-      <div class="sync-badge"><span class="sync-dot" id="sync-dot"></span><span id="sync-text">Connecting…</span></div>
+    <div id="new-products-banner" class="new-products-banner" style="display:none;">
+      <span id="new-products-text"></span>
+      <button onclick="dismissNewProductsBanner()">Dismiss</button>
+    </div>
 
-      <div id="new-products-banner" class="new-products-banner" style="display:none;">
-        <span id="new-products-text"></span>
-        <button onclick="dismissNewProductsBanner()">Dismiss</button>
+    <div id="admin-panel" style="display:none;">
+      <h3 style="margin-bottom:14px;">🛠 Edit Mode</h3>
+      <p class="account-note">Products live in this file's script — search for <strong>PRODUCTS = [</strong>. Each product has <code>visible: true</code> or <code>false</code> — flip it and re-upload to drop something live. Hidden products still show here (dimmed, marked "Hidden") so you can preview before flipping them live.</p>
+      <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+        <button class="admin-action-btn secondary" onclick="exitEditMode()">🔒 Exit Edit Mode</button>
       </div>
+    </div>
 
-      <div id="admin-panel" style="display:none;">
-        <h3 style="margin-bottom:14px;">🛠 Edit Mode</h3>
-        <p class="account-note">Products are built directly into this page's code now — search the script for <strong>PRODUCTS = [</strong> to find the list. Each product has a <code>visible: true</code> or <code>visible: false</code> field — flip that one value and re-upload the file to drop a product live for everyone. While in edit mode, hidden products still show up here (dimmed, marked "Hidden") so you can preview them before flipping them live.</p>
-        <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
-          <button class="admin-action-btn secondary" onclick="exitEditMode()">🔒 Exit Edit Mode</button>
-        </div>
-      </div>
+    <div class="search-wrap">
+      <input type="text" id="product-search" placeholder="Search products..." oninput="filterProducts(this.value)">
+    </div>
 
-      <div class="search-wrap">
-        <input type="text" id="product-search" placeholder="Search products..." oninput="filterProducts(this.value)">
-      </div>
+    <h2 class="section-title" style="margin-top:0;">Monthly Plans</h2>
+    <div class="grid" id="monthly-grid"></div>
+    <p class="empty-state" id="monthly-empty" style="display:none;">No monthly plans yet — check back soon.</p>
 
-      <h2 class="section-title">Monthly Plans</h2>
-      <div class="items-container" id="monthly-grid"></div>
-      <p class="empty-state" id="monthly-empty" style="display:none;">No monthly plans yet — check back soon.</p>
+    <h2 class="section-title">One-Time Purchases</h2>
+    <div class="grid" id="onetime-grid"></div>
+    <p class="empty-state" id="onetime-empty" style="display:none;">No one-time items yet — check back soon.</p>
 
-      <h2 class="section-title">One-Time Purchases</h2>
-      <div class="items-container" id="onetime-grid"></div>
-      <p class="empty-state" id="onetime-empty" style="display:none;">No one-time items yet — check back soon.</p>
-    </section>
+    <div class="faq-wrap" style="margin-top:60px;">
+      <h2 class="section-title" style="margin-top:0;">FAQ</h2>
+      <details>
+        <summary>How long does delivery take?</summary>
+        <p>Usually 10–15 minutes after payment is confirmed. If it's taking longer than that, we may be offline — hang tight, we'll get back to you.</p>
+      </details>
+      <details>
+        <summary>How do I receive my order?</summary>
+        <p>Send your PayPal payment confirmation over on Discord and tell us which item(s) you bought. Once it's verified, delivery follows. Keep that confirmation handy in case we need to check it again.</p>
+      </details>
+      <details>
+        <summary>What if I don't receive my order?</summary>
+        <p>Message us on Discord with your payment confirmation and we'll sort it out. If we genuinely can't deliver, you're covered by the Refund Policy below (no payment = no refund, obviously).</p>
+      </details>
+      <details>
+        <summary>Do monthly plans auto-renew?</summary>
+        <p>No — you'll need to renew manually each period. You can cancel any time by messaging us on Discord before your next billing date.</p>
+      </details>
+      <details>
+        <summary>What payment methods do you accept?</summary>
+        <p>PayPal only, prices in CAD. Your bank or PayPal may apply conversion if you're paying from elsewhere.</p>
+      </details>
+    </div>
 
-    <section id="faq">
-      <h2 class="section-title">Frequently Asked Questions</h2>
-      <div class="faq">
-        <details class="reveal">
-          <summary>How long does delivery take?</summary>
-          <p>Orders are delivered shortly after payment is confirmed. (10-15 mins is the fastest) Most are handled within the same day — if your order is taking longer than expected, we may be offline and will get back to you soon.</p>
-        </details>
-        <details class="reveal">
-          <summary>How do I receive my order?</summary>
-          <p>Once your payment confirmation is sent over to us, we will verify and make sure we got the money and will send over the paid purchased. delivery take up to 10-15 minutes. MAKE SURE to Keep your payment confirmation handy in case we need to verify it again..</p>
-        </details>
-        <details class="reveal">
-          <summary>What if I don't receive my order?</summary>
-          <p>Message us on Discord with your payment confirmation and we'll sort it out. If we can't deliver what you paid for, you're entitled to a refund under our Refund Policy below. (if no payment was given we will not give a refund)</p>
-        </details>
-        <details class="reveal">
-          <summary>Can I get a refund?</summary>
-          <p>Yes, in the situations where we can't get you you're paid purchased your covered by our Refund Policy. If an order wasn't delivered or wasn't as described. See the Terms &amp; Policies section for the full details.</p>
-        </details>
-        <details class="reveal">
-          <summary>Do monthly plans auto-renew?</summary>
-          <p>No. Monthly plans DO NOT renew automatically each month you will have to 1: Cancel the order or 2: Renew your order. Reminder that you can cancel any time by messaging us on Discord before your next billing date.</p>
-        </details>
-        <details class="reveal">
-          <summary>What payment methods do you accept?</summary>
-          <p>Payments are processed through PayPal. All prices are listed in Canadian Dollars (CAD); your bank or PayPal may apply currency conversion if you're paying from another country.</p>
-        </details>
-      </div>
-    </section>
-
-    <section id="terms" class="policies-wrap">
-      <h2 class="section-title">Terms &amp; Policies</h2>
-
-      <div class="policy-section reveal">
+    <div class="policy-wrap">
+      <h2 class="section-title" style="margin-top:0;">Terms &amp; Policies</h2>
+      <div class="policy-card">
         <h3>Terms of Service</h3>
-        <p>By purchasing from Loopstock, you agree to these terms. Orders are paid through PayPal and fulfilled by our team through Discord. It's your responsibility to provide accurate payment information and to keep your payment confirmation until your order is delivered. We reserve the right to refuse or cancel any order at our discretion, in which case a full refund will be issued. if money was sent.</p>
+        <p>By purchasing, you agree to these terms. Orders are paid through PayPal and fulfilled through Discord. It's on you to send accurate payment info and keep your confirmation until delivery. We can refuse or cancel any order at our discretion — a full refund follows if money was sent.</p>
       </div>
-
-      <div class="policy-section reveal">
+      <div class="policy-card">
         <h3>Refund Policy</h3>
         <ul>
-          <li>If your order isn't delivered within a reasonable time after payment is confirmed, you're entitled to a full refund — contact us on Discord with your payment confirmation.</li>
-          <li>Refunds are not offered simply for changing your mind after an order has already been delivered.</li>
-          <li>To request a refund, message us on Discord with your payment confirmation and the reason for the request. We aim to respond promptly.</li>
+          <li>Not delivered within a reasonable time after payment? You're entitled to a full refund — message us on Discord with your confirmation.</li>
+          <li>No refunds just for changing your mind once an order's already delivered.</li>
+          <li>To request one, message us on Discord with your confirmation and the reason. We aim to respond quickly.</li>
         </ul>
       </div>
-
-      <div class="policy-section reveal">
+      <div class="policy-card">
         <h3>Rental Rules</h3>
-        <p>Monthly plans grant access for the length of the billing period you've paid for. You can cancel any time before your next billing date to avoid being charged again; cancelling doesn't refund the current period already paid for.</p>
+        <p>Monthly plans grant access for the billing period you paid for. Cancel any time before the next billing date to avoid another charge — cancelling doesn't refund the current period.</p>
       </div>
-
-      <div class="policy-section reveal">
-        <h3>Purchase Rules</h3>
-        <p>One-time purchases are a single transaction covering one item — there's no recurring charge. What's included with each item is described on its product card; if anything is unclear, ask before you buy.</p>
-      </div>
-
-      <div class="policy-section reveal">
+      <div class="policy-card">
         <h3>Delivery Times</h3>
-        <p>Orders are typically delivered shortly after payment is confirmed(10-15 mins). If delivery is delayed beyond a reasonable time, contact us on Discord and we'll either resolve it or issue a refund. (if the discord account we use is not online please wait for it to go online.)</p>
+        <p>Typically 10–15 minutes after payment confirmation. Delayed longer than that? Message us on Discord and we'll resolve it or refund you.</p>
       </div>
-
-      <div class="policy-section reveal">
-        <h3>Privacy Policy</h3>
-        <p>We collect only what's needed to fulfill your order: your PayPal payment confirmation and your Discord username. This information is used solely to verify and deliver your order and is not sold or shared with third parties.</p>
+      <div class="policy-card">
+        <h3>Privacy</h3>
+        <p>We only collect what's needed to fulfill orders: your PayPal confirmation and Discord username. Used solely to verify and deliver — never sold or shared.</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="contact" class="policy-section reveal" style="margin-bottom:64px;">
-      <h3>Contact</h3>
-      <p>For order questions, delivery issues, or refund requests, message us on Discord: <strong>itz.zan</strong>.</p>
-    </section>
-  </div>
+  <!-- ============ SOCIALS ============ -->
+  <section id="socials" class="page">
+    <h2 class="section-title">🌐 Socials</h2>
+    <p class="section-sub">Come hang out — links go straight to the real thing.</p>
+    <div class="grid" style="max-width:760px;">
+      <div class="glass-card social-card">
+        <div class="icon">💬</div>
+        <h3>Discord</h3>
+        <div class="handle" id="social-discord-handle">itz.zan</div>
+        <p>Join the server for updates, support, and shop delivery — or DM directly.</p>
+        <div class="copy-row" style="margin-top:16px;">
+          <button class="cta-btn" style="width:auto; margin-top:0;" onclick="window.open(SITE_CONFIG.discordInvite,'_blank')">Join Server</button>
+          <button class="small" onclick="copyToClipboard(SITE_CONFIG.discordUsername,'Discord username copied')">Copy Username</button>
+        </div>
+      </div>
+      <div class="glass-card social-card">
+        <div class="icon">🎮</div>
+        <h3>Roblox</h3>
+        <div class="handle" id="social-roblox-handle">@YourRobloxName</div>
+        <p>Profile, games, and the group — all in one spot.</p>
+        <div class="copy-row" style="margin-top:16px;">
+          <button class="cta-btn" style="width:auto; margin-top:0;" onclick="window.open(SITE_CONFIG.robloxProfile,'_blank')">View Profile</button>
+          <button class="small" onclick="window.open(SITE_CONFIG.robloxGroup,'_blank')">Visit Group</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <footer>
-    <p><strong>Loopstock</strong> — Rentals &amp; Purchases</p>
-    <p>© 2026 All Rights Reserved</p>
-  </footer>
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="page">
+    <h2 class="section-title">✉️ Get In Touch</h2>
+    <div class="contact-container">
+      <input type="text" placeholder="Your Name" id="name">
+      <input type="email" placeholder="Your Email" id="email">
+      <textarea rows="6" placeholder="Your Message..." id="message"></textarea>
+      <button onclick="sendMessage()">Send Message</button>
+      <p class="account-note" style="text-align:center; margin-top:10px;">For shop orders, Discord is faster — see the Shop page.</p>
+    </div>
+  </section>
 
-  <!-- Firebase (shared database — makes products & reviews the same for every visitor) -->
-  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js" onerror="window.__firebaseLoadFailed=true"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js" onerror="window.__firebaseLoadFailed=true"></script>
+</main>
 
-  <script>
-    // Terms modal
-    const agreeCheck = document.getElementById('agree-check');
-    const enterBtn = document.getElementById('enter-btn');
-    agreeCheck.addEventListener('change', () => {
-      enterBtn.disabled = !agreeCheck.checked;
-    });
-    function enterSite() {
-      document.getElementById('tos-modal').style.display = 'none';
-    }
+<footer>
+  <p><strong>ZANVERSE</strong></p>
+  <p>© 2026 All Rights Reserved</p>
+</footer>
 
-    function toggleInstructions(event) {
-      // native <details> toggle already runs; extend here if needed
-    }
+<!-- Firebase (optional — only used to sync shop reviews across visitors) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js" onerror="window.__firebaseLoadFailed=true"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js" onerror="window.__firebaseLoadFailed=true"></script>
 
-    function toggleTheme() {
-      document.documentElement.classList.toggle('dark');
-    }
+<script>
+/* =====================================================================
+   SITE CONFIG — change the stuff below to customize the whole site.
+   Everything here is plain text/links, no HTML knowledge needed.
+   ===================================================================== */
+const SITE_CONFIG = {
+  siteTitle: 'ZANVERSE',
+  discordUsername: 'itz.zan',
+  discordInvite: 'https://discord.gg/your-invite-code',            // <- your real Discord invite
+  robloxProfile: 'https://www.roblox.com/users/0000000/profile',   // <- your Roblox profile link
+  robloxGroup: 'https://www.roblox.com/groups/0000000/your-group', // <- your Roblox group link
+  paypalUsername: 'BillyJay616',   // <- used to build the cart's combined PayPal checkout link
+  editToken: 'change-this-to-something-only-you-know',
+  announcement: {
+    enabled: true,
+    id: 'ann-2026-07',            // change this whenever you change the text, so it shows again
+    text: '🎉 The shop just got a cart — add multiple items and check out once.',
+    linkLabel: 'Check it out',
+    linkPage: 'shop'
+  }
+};
+document.getElementById('how-to-discord').textContent = SITE_CONFIG.discordUsername;
+document.getElementById('social-discord-handle').textContent = SITE_CONFIG.discordUsername;
 
-    function showToast(message, type = 'success') {
-      const stack = document.getElementById('toast-stack');
-      const toast = document.createElement('div');
-      toast.className = 'toast' + (type === 'error' ? ' error' : '');
-      toast.textContent = message;
-      stack.appendChild(toast);
-      setTimeout(() => toast.remove(), 4000);
-    }
+/* ---------- page navigation ---------- */
+function showPage(page){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById(page);
+  if (target) target.classList.add('active');
+  document.querySelectorAll('nav.mainnav button').forEach(btn => {
+    btn.classList.toggle('active', btn.id === `nav-${page}`);
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+  if (page === 'shop' && !localStorage.getItem('zanverse_shop_tos_seen')) openModal('shop-tos-modal');
+}
 
-    function copyDiscord(btn) {
-      navigator.clipboard.writeText('itz.zan').then(() => {
-        showToast('Discord username copied');
-      }).catch(() => {
-        showToast('Could not copy — copy manually: itz.zan', 'error');
-      });
-    }
+/* ---------- modal helpers ---------- */
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 
-    function startCheckout(btn, url) {
-      const spinner = btn.querySelector('.spinner');
-      const label = btn.querySelector('.btn-label');
-      btn.disabled = true;
-      if (spinner) spinner.style.display = 'inline-block';
-      if (label) label.textContent = 'Redirecting…';
-      setTimeout(() => {
-        window.open(url, '_blank');
-        btn.disabled = false;
-        if (spinner) spinner.style.display = 'none';
-        if (label) label.textContent = label.dataset.original || label.textContent;
-        showToast('Opened PayPal in a new tab — complete payment there.');
-      }, 500);
-    }
+function enterSite(){ localStorage.setItem('zanverse_welcome_seen','true'); closeModal('welcome-modal'); }
+document.getElementById('shop-agree-check')?.addEventListener('change', (e) => {
+  document.getElementById('shop-enter-btn').disabled = !e.target.checked;
+});
+function enterShop(){ localStorage.setItem('zanverse_shop_tos_seen','true'); closeModal('shop-tos-modal'); }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('status') === 'success') {
-      showToast('Payment received — check Discord for delivery instructions.');
-    } else if (urlParams.get('status') === 'cancelled') {
-      showToast('Payment cancelled — no charge was made.', 'error');
-    }
+/* ---------- theme ---------- */
+const THEME_KEY = 'zanverse_theme';
+function applyTheme(t){
+  document.documentElement.classList.toggle('light', t === 'light');
+  document.getElementById('theme-toggle-btn').textContent = t === 'light' ? '☀️' : '🌙';
+}
+function toggleTheme(){
+  const next = (localStorage.getItem(THEME_KEY) === 'light') ? 'dark' : 'light';
+  localStorage.setItem(THEME_KEY, next);
+  applyTheme(next);
+}
 
-    const sections = ['top', 'products', 'faq', 'terms', 'contact']
-      .map(id => document.getElementById(id))
-      .filter(Boolean);
-    const navLinks = document.querySelectorAll('.nav-link');
-    const spy = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          navLinks.forEach(link => {
-            link.classList.toggle('active', link.dataset.target === entry.target.id);
-          });
-        }
-      });
-    }, { rootMargin: '-40% 0px -50% 0px' });
-    sections.forEach(sec => spy.observe(sec));
+/* ---------- announcement banner ---------- */
+function initAnnouncement(){
+  const cfg = SITE_CONFIG.announcement;
+  const banner = document.getElementById('announcement-banner');
+  if (!cfg || !cfg.enabled) { banner.classList.add('hidden'); return; }
+  if (localStorage.getItem('zanverse_ann_dismissed') === cfg.id) { banner.classList.add('hidden'); return; }
+  document.getElementById('announcement-text').textContent = cfg.text;
+  const linkBtn = document.getElementById('announcement-link-btn');
+  if (cfg.linkLabel) {
+    linkBtn.textContent = cfg.linkLabel;
+    linkBtn.style.display = '';
+    linkBtn.onclick = () => showPage(cfg.linkPage || 'home');
+  } else linkBtn.style.display = 'none';
+  banner.classList.remove('hidden');
+}
+function dismissAnnouncement(){
+  localStorage.setItem('zanverse_ann_dismissed', SITE_CONFIG.announcement.id);
+  document.getElementById('announcement-banner').classList.add('hidden');
+}
 
-    const revealEls = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    revealEls.forEach((el, i) => {
-      el.style.transitionDelay = (i % 3) * 0.08 + 's';
-      revealObserver.observe(el);
-    });
+/* ---------- toasts ---------- */
+function showToast(message, type = 'success'){
+  const stack = document.getElementById('toast-stack');
+  const toast = document.createElement('div');
+  toast.className = 'toast' + (type === 'error' ? ' error' : '');
+  toast.textContent = message;
+  stack.appendChild(toast);
+  setTimeout(() => toast.remove(), 4000);
+}
+function copyToClipboard(text, successMsg){
+  navigator.clipboard.writeText(text).then(() => showToast(successMsg || 'Copied'))
+    .catch(() => showToast('Could not copy — copy manually: ' + text, 'error'));
+}
+function copyDiscord(){ copyToClipboard(SITE_CONFIG.discordUsername, 'Discord username copied'); }
 
-    const EDIT_TOKEN = 'change-this-to-something-only-you-know';
-    const EDITOR_KEY = 'loopstock_editor_unlocked';
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('status') === 'success') showToast('Payment received — check Discord for delivery instructions.');
+else if (urlParams.get('status') === 'cancelled') showToast('Payment cancelled — no charge was made.', 'error');
 
-    function isAdmin() { return localStorage.getItem(EDITOR_KEY) === 'true'; }
+/* ---------- admin / edit mode ---------- */
+const EDITOR_KEY = 'zanverse_editor_unlocked';
+function isAdmin(){ return localStorage.getItem(EDITOR_KEY) === 'true'; }
+function checkEditLink(){
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('edit');
+  if (!token) return;
+  if (token === SITE_CONFIG.editToken){
+    localStorage.setItem(EDITOR_KEY, 'true');
+    showToast('Edit mode unlocked on this device.');
+  } else if (token === 'exit'){
+    localStorage.removeItem(EDITOR_KEY);
+    showToast('Edit mode turned off on this device.');
+  }
+  params.delete('edit');
+  const clean = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+  window.history.replaceState({}, '', clean);
+}
+function exitEditMode(){ localStorage.removeItem(EDITOR_KEY); updateAccountUI(); showToast('Edit mode turned off.'); }
 
-    function checkEditLink() {
-      const params = new URLSearchParams(window.location.search);
-      const token = params.get('edit');
-      if (!token) return;
-      if (token === EDIT_TOKEN) {
-        localStorage.setItem(EDITOR_KEY, 'true');
-        showToast('Edit mode unlocked on this device.');
-      } else if (token === 'exit') {
-        localStorage.removeItem(EDITOR_KEY);
-        showToast('Edit mode turned off on this device.');
-      }
-      params.delete('edit');
-      const clean = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
-      window.history.replaceState({}, '', clean);
-    }
+/* ---------- accounts (browser-only demo) ---------- */
+const USERS_KEY = 'zanverse_users';
+const SESSION_KEY = 'zanverse_session';
+function getUsers(){ return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); }
+function saveUsers(u){ localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
+function currentUser(){ return localStorage.getItem(SESSION_KEY); }
 
-    function exitEditMode() {
-      localStorage.removeItem(EDITOR_KEY);
-      updateAccountUI();
-      showToast('Edit mode turned off.');
-    }
+function onAccountBtnClick(){
+  if (currentUser() || isAdmin()) document.getElementById('account-dropdown').classList.toggle('open');
+  else openModal('account-modal');
+}
+function switchAccountTab(tab){
+  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+  document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+  document.getElementById('login-form').classList.toggle('active', tab === 'login');
+  document.getElementById('register-form').classList.toggle('active', tab === 'register');
+}
+function handleRegister(e){
+  e.preventDefault();
+  const u = document.getElementById('register-username').value.trim();
+  const p = document.getElementById('register-password').value;
+  const err = document.getElementById('register-error');
+  const users = getUsers();
+  if (users[u]) { err.textContent = 'That username is already taken.'; return false; }
+  users[u] = p;
+  saveUsers(users);
+  localStorage.setItem(SESSION_KEY, u);
+  closeModal('account-modal'); updateAccountUI();
+  showToast('Account created — welcome, ' + u + '!');
+  return false;
+}
+function handleLogin(e){
+  e.preventDefault();
+  const u = document.getElementById('login-username').value.trim();
+  const p = document.getElementById('login-password').value;
+  const err = document.getElementById('login-error');
+  const users = getUsers();
+  if (!users[u] || users[u] !== p) { err.textContent = 'Incorrect username or password.'; return false; }
+  localStorage.setItem(SESSION_KEY, u);
+  closeModal('account-modal'); updateAccountUI();
+  showToast('Welcome back, ' + u + '!');
+  return false;
+}
+function logout(){
+  localStorage.removeItem(SESSION_KEY);
+  document.getElementById('account-dropdown').classList.remove('open');
+  updateAccountUI();
+  showToast('Logged out.');
+}
+function updateAccountUI(){
+  const label = document.getElementById('account-btn-label');
+  const u = currentUser();
+  label.textContent = isAdmin() ? '🛠 Admin' : (u ? u : 'Account');
+  document.getElementById('admin-panel').style.display = isAdmin() ? 'block' : 'none';
+  renderWishlistHearts();
+  renderProducts();
+  updateStats();
+}
+function toggleView(view){
+  document.getElementById('account-dropdown').classList.remove('open');
+  if (!currentUser()) { openModal('account-modal'); return; }
+  if (view === 'wishlist'){
+    const list = getWishlist();
+    showToast(list.length ? ('Wishlisted: ' + list.join(', ')) : 'Your wishlist is empty.');
+  } else {
+    showToast("Purchase history isn't tracked automatically — this page can't confirm PayPal payments without a backend.");
+  }
+}
+document.addEventListener('click', (e) => {
+  const panel = document.querySelector('.account-panel');
+  if (panel && !panel.contains(e.target)) document.getElementById('account-dropdown').classList.remove('open');
+});
 
-    const USERS_KEY = 'loopstock_users';
-    const SESSION_KEY = 'loopstock_session';
+/* ---------- wishlist ---------- */
+function wishlistKey(){ return 'zanverse_wishlist_' + (currentUser() || 'guest'); }
+function getWishlist(){ return JSON.parse(localStorage.getItem(wishlistKey()) || '[]'); }
+function toggleWishlist(pid){
+  let list = getWishlist();
+  if (list.includes(pid)) { list = list.filter(x => x !== pid); showToast('Removed from wishlist.'); }
+  else { list.push(pid); showToast('Added to wishlist.'); }
+  localStorage.setItem(wishlistKey(), JSON.stringify(list));
+  renderWishlistHearts();
+  updateStats();
+}
+function renderWishlistHearts(){
+  const list = getWishlist();
+  document.querySelectorAll('.wishlist-btn').forEach(btn => {
+    const pid = btn.dataset.pid;
+    const on = list.includes(pid);
+    btn.classList.toggle('active', on);
+    btn.textContent = on ? '❤️' : '🤍';
+  });
+}
 
-    function getUsers() { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); }
-    function saveUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
-    function currentUser() { return localStorage.getItem(SESSION_KEY); }
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str == null ? '' : String(str);
+  return d.innerHTML;
+}
 
-    function onAccountBtnClick() {
-      if (currentUser() || isAdmin()) {
-        document.getElementById('account-dropdown').classList.toggle('open');
-      } else {
-        openAccountModal();
-      }
-    }
-    function openAccountModal() { document.getElementById('account-modal').classList.add('open'); }
-    function closeAccountModal() { document.getElementById('account-modal').classList.remove('open'); }
-    function switchAccountTab(tab) {
-      document.getElementById('tab-login').classList.toggle('active', tab === 'login');
-      document.getElementById('tab-register').classList.toggle('active', tab === 'register');
-      document.getElementById('login-form').classList.toggle('active', tab === 'login');
-      document.getElementById('register-form').classList.toggle('active', tab === 'register');
-    }
-    function handleRegister(e) {
-      e.preventDefault();
-      const u = document.getElementById('register-username').value.trim();
-      const p = document.getElementById('register-password').value;
-      const err = document.getElementById('register-error');
-      const users = getUsers();
-      if (users[u]) { err.textContent = 'That username is already taken.'; return false; }
-      users[u] = p;
-      saveUsers(users);
-      localStorage.setItem(SESSION_KEY, u);
-      closeAccountModal();
-      updateAccountUI();
-      showToast('Account created — welcome, ' + u + '!');
-      return false;
-    }
-    function handleLogin(e) {
-      e.preventDefault();
-      const u = document.getElementById('login-username').value.trim();
-      const p = document.getElementById('login-password').value;
-      const err = document.getElementById('login-error');
-      const users = getUsers();
-      if (!users[u] || users[u] !== p) { err.textContent = 'Incorrect username or password.'; return false; }
-      localStorage.setItem(SESSION_KEY, u);
-      closeAccountModal();
-      updateAccountUI();
-      showToast('Welcome back, ' + u + '!');
-      return false;
-    }
-    function logout() {
-      localStorage.removeItem(SESSION_KEY);
-      document.getElementById('account-dropdown').classList.remove('open');
-      updateAccountUI();
-      showToast('Logged out.');
-    }
-    function updateAccountUI() {
-      const label = document.getElementById('account-btn-label');
-      const u = currentUser();
-      label.textContent = isAdmin() ? '🛠 Admin' : (u ? u : 'Account');
-      document.getElementById('admin-panel').style.display = isAdmin() ? 'block' : 'none';
-      renderWishlistHearts();
-      renderProducts();
-      updateStats();
-    }
-    function toggleView(view) {
-      document.getElementById('account-dropdown').classList.remove('open');
-      if (!currentUser()) { openAccountModal(); return; }
-      if (view === 'wishlist') {
-        const list = getWishlist();
-        showToast(list.length ? ('Wishlisted: ' + list.join(', ')) : 'Your wishlist is empty.');
-      } else {
-        showToast('Purchase history isn\'t tracked automatically — this page can\'t confirm PayPal payments without a backend.');
-      }
-    }
-    document.addEventListener('click', (e) => {
-      const panel = document.querySelector('.account-panel');
-      if (panel && !panel.contains(e.target)) {
-        document.getElementById('account-dropdown').classList.remove('open');
-      }
-    });
+/* ---------- Firebase (optional — reviews fall back to this device if not set up) ---------- */
+const firebaseConfig = {
+  apiKey: "PASTE_YOUR_API_KEY_HERE",
+  authDomain: "PASTE_YOUR_PROJECT.firebaseapp.com",
+  projectId: "PASTE_YOUR_PROJECT_ID",
+  storageBucket: "PASTE_YOUR_PROJECT.appspot.com",
+  messagingSenderId: "PASTE_YOUR_SENDER_ID",
+  appId: "PASTE_YOUR_APP_ID"
+};
+function isFirebaseConfigured(){
+  return firebaseConfig.apiKey && !String(firebaseConfig.apiKey).includes('PASTE_YOUR');
+}
+let db = null, firebaseReady = false;
+if (isFirebaseConfigured() && !window.__firebaseLoadFailed && typeof firebase !== 'undefined'){
+  try { firebase.initializeApp(firebaseConfig); db = firebase.firestore(); firebaseReady = true; }
+  catch(e){ console.error('Firebase initializeApp() failed.', e); }
+}
+// If Firebase isn't configured, reviews quietly save to this browser instead —
+// no setup required, and no "not connected" warnings shown to visitors.
 
-    function wishlistKey() { return 'loopstock_wishlist_' + (currentUser() || 'guest'); }
-    function getWishlist() { return JSON.parse(localStorage.getItem(wishlistKey()) || '[]'); }
-    function toggleWishlist(pid) {
-      let list = getWishlist();
-      if (list.includes(pid)) {
-        list = list.filter(x => x !== pid);
-        showToast('Removed from wishlist.');
-      } else {
-        list.push(pid);
-        showToast('Added to wishlist.');
-      }
-      localStorage.setItem(wishlistKey(), JSON.stringify(list));
-      renderWishlistHearts();
-      updateStats();
-    }
-    function renderWishlistHearts() {
-      const list = getWishlist();
-      document.querySelectorAll('.wishlist-btn').forEach(btn => {
-        const pid = btn.dataset.pid;
-        const on = list.includes(pid);
-        btn.classList.toggle('active', on);
-        btn.textContent = on ? '❤️' : '🤍';
-      });
-    }
+/* =====================================================================
+   PRODUCTS — same shop lineup as before. Copy a whole { ... } block to
+   add a new one. Flip "visible" from false to true to drop a staged
+   item live. "soldOut: true" shows Sold Out and disables Add to Cart.
+   ===================================================================== */
+const PRODUCTS = [
+  { id: 'p_rental_1', name: 'Fully working discord bot', type: 'rental', icon: '📦', badge: 'popular',
+    price: '20', unit: '/ month', desc: 'A fully functional Discord bot built to work perfectly in your server. Whatever you want it to do, it can do. (we will install it)',
+    soldOut: false, visible: true, addedAt: 1000000000001 },
 
-    function escapeHtml(str) {
-      const d = document.createElement('div');
-      d.textContent = str == null ? '' : String(str);
-      return d.innerHTML;
-    }
+  { id: 'p_rental_2', name: 'Standard Plan', type: 'rental', icon: '📦', badge: '',
+    price: '10', unit: '/ month', desc: 'Replace with a real description of what this plan includes.',
+    soldOut: false, visible: false, addedAt: 1000000000002 },
 
-    const firebaseConfig = {
-      apiKey: "PASTE_YOUR_API_KEY_HERE",
-      authDomain: "PASTE_YOUR_PROJECT.firebaseapp.com",
-      projectId: "PASTE_YOUR_PROJECT_ID",
-      storageBucket: "PASTE_YOUR_PROJECT.appspot.com",
-      messagingSenderId: "PASTE_YOUR_SENDER_ID",
-      appId: "PASTE_YOUR_APP_ID"
-    };
+  { id: 'p_rental_3', name: 'Pro Plan', type: 'rental', icon: '📦', badge: 'best',
+    price: '18', unit: '/ month', desc: 'Replace with a real description of what this plan includes.',
+    soldOut: false, visible: false, addedAt: 1000000000003 },
 
-    let db = null;
-    let firebaseReady = false;
-    if (window.__firebaseLoadFailed || typeof firebase === 'undefined') {
-      console.error('Firebase SDK scripts did not load — check your internet connection or the CDN <script> tags in <head>.');
-      showToast('Could not load the Firebase library — check your connection and reload.', 'error');
-    } else {
-      try {
-        firebase.initializeApp(firebaseConfig);
-        db = firebase.firestore();
-        firebaseReady = true;
-      } catch (e) {
-        console.error('Firebase SDK loaded, but initializeApp() failed — this usually means firebaseConfig has placeholder or incorrect values.', e);
-        showToast('Firebase config looks incomplete — paste your real project config in.', 'error');
-      }
-    }
+  { id: 'p_rental_4', name: 'Team Plan', type: 'rental', icon: '📦', badge: '',
+    price: '30', unit: '/ month', desc: 'Replace with a real description of what this plan includes.',
+    soldOut: false, visible: false, addedAt: 1000000000004 },
 
-    function setSyncStatus(state) {
-      const dot = document.getElementById('sync-dot');
-      const text = document.getElementById('sync-text');
-      if (!dot || !text) return;
-      dot.className = 'sync-dot ' + state;
-      text.textContent = state === 'live' ? 'Reviews: live — synced for everyone'
-        : state === 'offline' ? 'Reviews: not connected (check Firebase setup)'
-        : 'Reviews: connecting…';
-    }
+  { id: 'p_rental_5', name: 'Upcoming Plan', type: 'rental', icon: '📦', badge: '',
+    price: '12', unit: '/ month', desc: 'Example of a staged product — flip visible to true to drop it live.',
+    soldOut: false, visible: false, addedAt: 1000000000005 },
 
-    // =====================================================================
-    // PRODUCTS — built directly into this file, so every visitor gets the
-    // exact same list automatically (no database needed for this part).
-    //
-    // To add a product: copy one whole { ... } block below, paste it as a
-    // new entry, give it a unique "id", fill in the details.
-    //
-    // To "drop" a staged product live: find it below, change its
-    // "visible" field from false to true, save this file, and re-upload
-    // it to your host. That's the entire "one thing changes" workflow.
-    //
-    // soldOut: true shows a "Sold Out" badge and disables the Buy button.
-    // addedAt: just needs to be a unique, increasing number — it's used
-    // to figure out what counts as "new" for the new-product banner.
-    // =====================================================================
-    const PRODUCTS = [
-      { id: 'p_rental_1', name: 'Fully working discord bot', type: 'rental', icon: '📦', badge: 'popular',
-        price: '20', unit: '/ month', desc: 'A fully functional Discord bot built to work perfectly in your server. Whatever you want it to do, it can do. (we will install it)',
-        paypal: 'https://paypal.me/BillyJay616/20', soldOut: false, visible: true, addedAt: 1000000000001 },
+  { id: 'p_purchase_1', name: 'Discord verification bot', type: 'purchase', icon: '🎁', badge: 'popular',
+    price: '15', unit: 'CAD', desc: "Verifies people at the click of a button. (we will install it)",
+    soldOut: false, visible: true, addedAt: 1000000000006 },
 
-      { id: 'p_rental_2', name: 'Standard Plan', type: 'rental', icon: '📦', badge: '',
-        price: '10', unit: '/ month', desc: 'Replace with a real description of what this plan includes.',
-        paypal: 'https://paypal.me/BillyJay616/10', soldOut: false, visible: false, addedAt: 1000000000002 },
+  { id: 'p_purchase_2', name: 'HTML Farming Game', type: 'purchase', icon: '🎁', badge: 'best',
+    price: '120', unit: 'CAD', desc: "A fully coded farming game built in HTML.",
+    soldOut: false, visible: true, addedAt: 1000000000007 },
 
-      { id: 'p_rental_3', name: 'Pro Plan', type: 'rental', icon: '📦', badge: 'best',
-        price: '18', unit: '/ month', desc: 'Replace with a real description of what this plan includes.',
-        paypal: 'https://paypal.me/BillyJay616/18', soldOut: false, visible: false, addedAt: 1000000000003 },
+  { id: 'p_purchase_3', name: 'Deluxe Pack', type: 'purchase', icon: '🎁', badge: 'popular',
+    price: '40', unit: 'CAD', desc: "Replace with a real description of what's included.",
+    soldOut: false, visible: false, addedAt: 1000000000008 },
 
-      { id: 'p_rental_4', name: 'Team Plan', type: 'rental', icon: '📦', badge: '',
-        price: '30', unit: '/ month', desc: 'Replace with a real description of what this plan includes.',
-        paypal: 'https://paypal.me/BillyJay616/30', soldOut: false, visible: false, addedAt: 1000000000004 },
+  { id: 'p_purchase_4', name: 'Limited Item', type: 'purchase', icon: '🎁', badge: '',
+    price: '35', unit: 'CAD', desc: "Replace with a real description of what's included.",
+    soldOut: true, visible: false, addedAt: 1000000000009 },
 
-      { id: 'p_rental_5', name: 'Upcoming Plan', type: 'rental', icon: '📦', badge: '',
-        price: '12', unit: '/ month', desc: 'Example of a staged product — flip visible to true to drop it live.',
-        paypal: 'https://paypal.me/BillyJay616/12', soldOut: false, visible: false, addedAt: 1000000000005 },
+  { id: 'p_purchase_5', name: 'Upcoming Item', type: 'purchase', icon: '🎁', badge: '',
+    price: '20', unit: 'CAD', desc: 'Example of a staged product — flip visible to true to drop it live.',
+    soldOut: false, visible: false, addedAt: 1000000000010 }
+];
 
-      { id: 'p_purchase_1', name: 'Discord verification bot', type: 'purchase', icon: '🎁', badge: 'popular',
-        price: '15', unit: 'CAD', desc: "Veifys people by a click of a button. (we will install it)",
-        paypal: 'https://paypal.me/BillyJay616/15', soldOut: false, visible: true, addedAt: 1000000000006 },
+/* ---------- cart (with quantity, works for rentals and purchases) ---------- */
+const CARD_QTY = {};
+function cardQty(pid){ return CARD_QTY[pid] || 1; }
+function stepCardQty(pid, delta){
+  CARD_QTY[pid] = Math.max(1, Math.min(20, cardQty(pid) + delta));
+  const el = document.getElementById('qty-disp-' + pid);
+  if (el) el.textContent = CARD_QTY[pid];
+}
+function getCart(){ return JSON.parse(localStorage.getItem('zanverse_cart') || '{}'); }
+function saveCart(cart){ localStorage.setItem('zanverse_cart', JSON.stringify(cart)); renderCartUI(); }
+function addToCartFromCard(pid){
+  const qty = cardQty(pid);
+  const cart = getCart();
+  cart[pid] = (cart[pid] || 0) + qty;
+  saveCart(cart);
+  CARD_QTY[pid] = 1;
+  const el = document.getElementById('qty-disp-' + pid);
+  if (el) el.textContent = '1';
+  showToast('Added to cart 🛒');
+}
+function setCartQty(pid, qty){
+  const cart = getCart();
+  qty = Math.max(0, Math.min(20, qty));
+  if (qty === 0) delete cart[pid]; else cart[pid] = qty;
+  saveCart(cart);
+}
+function removeFromCart(pid){ const cart = getCart(); delete cart[pid]; saveCart(cart); }
+function cartCount(){ return Object.values(getCart()).reduce((s, q) => s + q, 0); }
+function cartTotal(){
+  const cart = getCart();
+  let total = 0;
+  Object.entries(cart).forEach(([pid, qty]) => {
+    const p = PRODUCTS.find(x => x.id === pid);
+    if (p) total += parseFloat(p.price) * qty;
+  });
+  return total;
+}
+function renderCartUI(){
+  document.getElementById('cart-count').textContent = cartCount();
+  const cart = getCart();
+  const entries = Object.entries(cart);
+  const itemsEl = document.getElementById('cart-items');
+  itemsEl.innerHTML = entries.length ? entries.map(([pid, qty]) => {
+    const p = PRODUCTS.find(x => x.id === pid);
+    if (!p) return '';
+    return '<div class="cart-item">' +
+      '<div><div class="cart-item-name">' + escapeHtml(p.name) + '</div>' +
+      '<div class="cart-item-sub">$' + escapeHtml(p.price) + ' ' + escapeHtml(p.unit || '') + ' each</div></div>' +
+      '<div class="qty-stepper">' +
+        '<button onclick="setCartQty(' + JSON.stringify(pid) + ',' + (qty - 1) + ')">−</button>' +
+        '<span>' + qty + '</span>' +
+        '<button onclick="setCartQty(' + JSON.stringify(pid) + ',' + (qty + 1) + ')">+</button>' +
+      '</div>' +
+      '<button class="close-modal-x" style="position:static;" onclick="removeFromCart(' + JSON.stringify(pid) + ')" aria-label="Remove">&times;</button>' +
+    '</div>';
+  }).join('') : '<p class="empty-state">Your cart is empty.</p>';
+  document.getElementById('cart-total-amt').textContent = '$' + cartTotal().toFixed(2);
+}
+function toggleCartDrawer(){
+  document.getElementById('cart-drawer').classList.toggle('open');
+  document.getElementById('cart-backdrop').classList.toggle('open');
+}
+function checkoutCart(){
+  const total = cartTotal();
+  if (total <= 0) { showToast('Your cart is empty.', 'error'); return; }
+  window.open('https://paypal.me/' + SITE_CONFIG.paypalUsername + '/' + total.toFixed(2), '_blank');
+  showToast('Opened PayPal for your cart total — after paying, send your receipt + item list on Discord.');
+}
 
-      { id: 'p_purchase_2', name: 'Html Farming game', type: 'purchase', icon: '🎁', badge: 'best',
-        price: '120', unit: 'CAD', desc: "Get a fully coded farming game made in html (link: https://oksssssssss.github.io/Little-Valley-Farm/).",
-        paypal: 'https://paypal.me/BillyJay616/120', soldOut: false, visible: true, addedAt: 1000000000007 },
+function productCardHtml(p){
+  const badgeHtml = p.soldOut ? '<span class="badge badge-soldout">Sold Out</span>'
+    : (p.badge === 'popular' ? '<span class="badge badge-popular">🔥 Popular</span>'
+       : p.badge === 'best' ? '<span class="badge badge-popular">⭐ Best Value</span>' : '');
+  const typeLabel = p.type === 'rental' ? 'Rental' : 'Purchase';
+  const isHidden = p.visible === false;
+  const hiddenBadge = (isAdmin() && isHidden) ? '<span class="badge badge-hidden">Hidden — admin only</span>' : '';
+  const addBtn = p.soldOut
+    ? '<button class="buy" disabled>Sold Out</button>'
+    : '<button class="buy" onclick=\'addToCartFromCard(' + JSON.stringify(p.id) + ')\'>🛒 Add to Cart</button>';
 
-      { id: 'p_purchase_3', name: 'Deluxe Pack', type: 'purchase', icon: '🎁', badge: 'popular',
-        price: '40', unit: 'CAD', desc: "Replace with a real description of what's included.",
-        paypal: 'https://paypal.me/BillyJay616/40', soldOut: false, visible: false, addedAt: 1000000000008 },
-
-      { id: 'p_purchase_4', name: 'Limited Item', type: 'purchase', icon: '🎁', badge: '',
-        price: '35', unit: 'CAD', desc: "Replace with a real description of what's included.",
-        paypal: 'https://paypal.me/BillyJay616/35', soldOut: true, visible: false, addedAt: 1000000000009 },
-
-      { id: 'p_purchase_5', name: 'Upcoming Item', type: 'purchase', icon: '🎁', badge: '',
-        price: '20', unit: 'CAD', desc: 'Example of a staged product — flip visible to true to drop it live.',
-        paypal: 'https://paypal.me/BillyJay616/20', soldOut: false, visible: false, addedAt: 1000000000010 }
-    ];
-
-    function getProducts() { return PRODUCTS; }
-
-
-    function productCardHtml(p) {
-      const badgeHtml = p.soldOut
-        ? '<span class="badge badge-soldout">Sold Out</span>'
-        : (p.badge === 'popular' ? '<span class="badge badge-popular">Popular</span>'
-           : p.badge === 'best' ? '<span class="badge badge-popular">Best Value</span>' : '');
-      const typeLabel = p.type === 'rental' ? 'Rental' : 'Purchase';
-      const buyBtn = p.soldOut
-        ? '<button class="buy" disabled><span class="btn-label">Sold Out</span></button>'
-        : '<button class="buy" onclick=\'startCheckout(this, ' + JSON.stringify(p.paypal) + ')\'><span class="spinner"></span><span class="btn-label">' +
-          (p.type === 'rental' ? 'Subscribe' : 'Buy Now') + '</span></button>';
-      const isHidden = p.visible === false;
-      const hiddenBadge = (isAdmin() && isHidden) ? '<span class="badge badge-hidden">Hidden — admin only</span>' : '';
-
-      return '<div class="item' + (isAdmin() && isHidden ? ' item-hidden' : '') + '" data-pid="' + p.id + '">' +
-        '<div class="badge-row"><span class="badge badge-type">' + typeLabel + '</span>' + badgeHtml + hiddenBadge + '</div>' +
-        '<div class="icon-wrap">' + escapeHtml(p.icon) + '</div>' +
-        '<h3>' + escapeHtml(p.name) + '</h3>' +
-        '<p class="desc">' + escapeHtml(p.desc || '') + '</p>' +
-        '<p class="price">$' + escapeHtml(p.price) + ' <span class="unit">' + escapeHtml(p.unit || '') + '</span></p>' +
-        '<div class="discord-line">Delivery via Discord: <button onclick="copyDiscord(this)">itz.zan 📋</button></div>' +
-        buyBtn +
-        '<button class="wishlist-btn" data-pid="' + p.id + '" onclick=\'toggleWishlist(' + JSON.stringify(p.id) + ')\' aria-label="Add to wishlist">🤍</button>' +
-        '<div class="review-box">' +
-          '<div class="review-summary"><span id="rev-avg-' + p.id + '">No reviews yet</span>' +
-          '<button class="review-toggle" onclick=\'toggleReviewForm(' + JSON.stringify(p.id) + ')\'>Write a review</button></div>' +
-          '<div class="review-form" id="rev-form-' + p.id + '">' +
-            '<div class="star-input" id="rev-stars-' + p.id + '" data-value="0">' +
-              [1,2,3,4,5].map(n => '<span data-v="' + n + '">★</span>').join('') +
-            '</div>' +
-            '<textarea id="rev-text-' + p.id + '" placeholder="Share your experience..."></textarea>' +
-            '<button class="submit-review" onclick=\'submitReview(' + JSON.stringify(p.id) + ')\'>Submit Review</button>' +
-          '</div>' +
-          '<div class="review-list" id="rev-list-' + p.id + '"></div>' +
+  return '<div class="glass-card item' + (isAdmin() && isHidden ? ' item-hidden' : '') + '" data-pid="' + p.id + '">' +
+    '<div class="badge-row"><span class="badge badge-type">' + typeLabel + '</span>' + badgeHtml + hiddenBadge + '</div>' +
+    '<div class="icon-wrap">' + escapeHtml(p.icon) + '</div>' +
+    '<h3>' + escapeHtml(p.name) + '</h3>' +
+    '<p class="desc">' + escapeHtml(p.desc || '') + '</p>' +
+    '<p class="price">$' + escapeHtml(p.price) + ' <span class="unit">' + escapeHtml(p.unit || '') + '</span></p>' +
+    '<div class="discord-line">Delivery via Discord: <button onclick="copyDiscord()">' + escapeHtml(SITE_CONFIG.discordUsername) + ' 📋</button></div>' +
+    '<div class="qty-row">' +
+      '<div class="qty-stepper">' +
+        '<button onclick="stepCardQty(' + JSON.stringify(p.id) + ',-1)">−</button>' +
+        '<span id="qty-disp-' + p.id + '">1</span>' +
+        '<button onclick="stepCardQty(' + JSON.stringify(p.id) + ',1)">+</button>' +
+      '</div>' +
+    '</div>' +
+    addBtn +
+    '<button class="wishlist-btn" data-pid="' + p.id + '" onclick=\'toggleWishlist(' + JSON.stringify(p.id) + ')\' aria-label="Add to wishlist">🤍</button>' +
+    '<div class="review-box">' +
+      '<div class="review-summary"><span id="rev-avg-' + p.id + '">No reviews yet</span>' +
+      '<button class="review-toggle" onclick=\'toggleReviewForm(' + JSON.stringify(p.id) + ')\'>Write a review</button></div>' +
+      '<div class="review-form" id="rev-form-' + p.id + '">' +
+        '<div class="star-input" id="rev-stars-' + p.id + '" data-value="0">' +
+          [1,2,3,4,5].map(n => '<span data-v="' + n + '">★</span>').join('') +
         '</div>' +
-      '</div>';
-    }
+        '<textarea id="rev-text-' + p.id + '" placeholder="Share your experience..."></textarea>' +
+        '<button class="submit-review" onclick=\'submitReview(' + JSON.stringify(p.id) + ')\'>Submit Review</button>' +
+      '</div>' +
+      '<div class="review-list" id="rev-list-' + p.id + '"></div>' +
+    '</div>' +
+  '</div>';
+}
 
-    function renderProducts() {
-      const list = PRODUCTS;
-      const visibleToThisVisitor = isAdmin() ? list : list.filter(p => p.visible !== false);
-      const monthly = visibleToThisVisitor.filter(p => p.type === 'rental');
-      const onetime = visibleToThisVisitor.filter(p => p.type === 'purchase');
+function renderProducts(){
+  const visibleToThisVisitor = isAdmin() ? PRODUCTS : PRODUCTS.filter(p => p.visible !== false);
+  const monthly = visibleToThisVisitor.filter(p => p.type === 'rental');
+  const onetime = visibleToThisVisitor.filter(p => p.type === 'purchase');
 
-      document.getElementById('monthly-grid').innerHTML = monthly.map(productCardHtml).join('');
-      document.getElementById('onetime-grid').innerHTML = onetime.map(productCardHtml).join('');
-      document.getElementById('monthly-empty').style.display = monthly.length ? 'none' : 'block';
-      document.getElementById('onetime-empty').style.display = onetime.length ? 'none' : 'block';
+  document.getElementById('monthly-grid').innerHTML = monthly.map(productCardHtml).join('');
+  document.getElementById('onetime-grid').innerHTML = onetime.map(productCardHtml).join('');
+  document.getElementById('monthly-empty').style.display = monthly.length ? 'none' : 'block';
+  document.getElementById('onetime-empty').style.display = onetime.length ? 'none' : 'block';
 
-      visibleToThisVisitor.forEach(p => renderReviews(p.id));
-      renderWishlistHearts();
-      checkNewProductsBanner();
-    }
+  visibleToThisVisitor.forEach(p => renderReviews(p.id));
+  renderWishlistHearts();
+  renderCartUI();
+  checkNewProductsBanner();
+}
 
-    const LAST_SEEN_KEY = 'loopstock_last_seen_products';
-    function checkNewProductsBanner() {
-      const list = PRODUCTS.filter(p => p.visible !== false);
-      const banner = document.getElementById('new-products-banner');
-      if (!list.length) { banner.style.display = 'none'; return; }
-      let lastSeen = parseInt(localStorage.getItem(LAST_SEEN_KEY) || '0', 10);
-      if (lastSeen === 0) {
-        const maxAdded = list.reduce((m, p) => Math.max(m, p.addedAt || 0), 0);
-        localStorage.setItem(LAST_SEEN_KEY, String(maxAdded));
-        banner.style.display = 'none';
-        return;
-      }
-      const newer = list.filter(p => (p.addedAt || 0) > lastSeen);
-      if (newer.length) {
-        document.getElementById('new-products-text').textContent =
-          '🆕 ' + newer.length + ' new product' + (newer.length > 1 ? 's' : '') + ' just added!';
-        banner.style.display = 'flex';
-      } else {
-        banner.style.display = 'none';
-      }
-    }
-    function dismissNewProductsBanner() {
-      const list = PRODUCTS.filter(p => p.visible !== false);
-      const maxAdded = list.reduce((m, p) => Math.max(m, p.addedAt || 0), 0);
-      localStorage.setItem(LAST_SEEN_KEY, String(maxAdded));
-      document.getElementById('new-products-banner').style.display = 'none';
-    }
+const LAST_SEEN_KEY = 'zanverse_last_seen_products';
+function checkNewProductsBanner(){
+  const list = PRODUCTS.filter(p => p.visible !== false);
+  const banner = document.getElementById('new-products-banner');
+  if (!list.length) { banner.style.display = 'none'; return; }
+  let lastSeen = parseInt(localStorage.getItem(LAST_SEEN_KEY) || '0', 10);
+  if (lastSeen === 0){
+    const maxAdded = list.reduce((m, p) => Math.max(m, p.addedAt || 0), 0);
+    localStorage.setItem(LAST_SEEN_KEY, String(maxAdded));
+    banner.style.display = 'none';
+    return;
+  }
+  const newer = list.filter(p => (p.addedAt || 0) > lastSeen);
+  if (newer.length){
+    document.getElementById('new-products-text').textContent =
+      '🆕 ' + newer.length + ' new product' + (newer.length > 1 ? 's' : '') + ' just added!';
+    banner.style.display = 'flex';
+  } else banner.style.display = 'none';
+}
+function dismissNewProductsBanner(){
+  const list = PRODUCTS.filter(p => p.visible !== false);
+  const maxAdded = list.reduce((m, p) => Math.max(m, p.addedAt || 0), 0);
+  localStorage.setItem(LAST_SEEN_KEY, String(maxAdded));
+  document.getElementById('new-products-banner').style.display = 'none';
+}
 
-    let REVIEWS_CACHE = {};
+/* ---------- reviews (Firebase live-sync if configured, this-device fallback if not) ---------- */
+let REVIEWS_CACHE = {};
+const LOCAL_REVIEWS_KEY = 'zanverse_local_reviews';
+function getLocalReviews(){ return JSON.parse(localStorage.getItem(LOCAL_REVIEWS_KEY) || '{}'); }
+function saveLocalReviews(obj){ localStorage.setItem(LOCAL_REVIEWS_KEY, JSON.stringify(obj)); }
+function getReviews(pid){ return firebaseReady ? (REVIEWS_CACHE[pid] || []) : (getLocalReviews()[pid] || []); }
 
-    function getReviews(pid) { return REVIEWS_CACHE[pid] || []; }
-
-    function listenToReviews() {
-      if (!firebaseReady) { setSyncStatus('offline'); return; }
-      db.collection('reviews').onSnapshot((snapshot) => {
-        const byProduct = {};
-        snapshot.docs.forEach(doc => {
-          const r = doc.data();
-          if (!byProduct[r.productId]) byProduct[r.productId] = [];
-          byProduct[r.productId].push(r);
-        });
-        const previousIds = Object.keys(REVIEWS_CACHE);
-        REVIEWS_CACHE = byProduct;
-        const allIds = new Set([...previousIds, ...Object.keys(byProduct)]);
-        allIds.forEach(pid => renderReviews(pid));
-        updateStats();
-        setSyncStatus('live');
-      }, (err) => {
-        console.error('Reviews listener error:', err);
-        setSyncStatus('offline');
-      });
-    }
-
-    function toggleReviewForm(pid) {
-      document.getElementById('rev-form-' + pid).classList.toggle('open');
-    }
-    document.addEventListener('click', (e) => {
-      const span = e.target.closest('.star-input span');
-      if (!span) return;
-      const starEl = span.closest('.star-input');
-      const v = parseInt(span.dataset.v, 10);
-      starEl.dataset.value = v;
-      starEl.querySelectorAll('span').forEach(s => s.classList.toggle('filled', parseInt(s.dataset.v, 10) <= v));
+function listenToReviews(){
+  if (!firebaseReady) return;
+  db.collection('reviews').onSnapshot((snapshot) => {
+    const byProduct = {};
+    snapshot.docs.forEach(doc => {
+      const r = doc.data();
+      if (!byProduct[r.productId]) byProduct[r.productId] = [];
+      byProduct[r.productId].push(r);
     });
-    async function submitReview(pid) {
-      if (!firebaseReady) { showToast('Not connected to the shared database yet.', 'error'); return; }
-      const starEl = document.getElementById('rev-stars-' + pid);
-      const rating = parseInt(starEl.dataset.value || '0', 10);
-      const textEl = document.getElementById('rev-text-' + pid);
-      const text = textEl.value.trim();
-      if (!rating) { showToast('Pick a star rating first.', 'error'); return; }
-      try {
-        await db.collection('reviews').add({
-          productId: pid, rating, text,
-          by: currentUser() || 'Guest',
-          date: new Date().toLocaleDateString(),
-          createdAt: Date.now()
-        });
-      } catch (e) {
-        console.error(e);
-        showToast('Could not submit review.', 'error');
-        return;
-      }
-      textEl.value = '';
-      starEl.dataset.value = 0;
-      starEl.querySelectorAll('span').forEach(s => s.classList.remove('filled'));
-      document.getElementById('rev-form-' + pid).classList.remove('open');
-      showToast('Thanks for your review — it\'s live for everyone now!');
-    }
-    function renderReviews(pid) {
-      const avgEl = document.getElementById('rev-avg-' + pid);
-      const listEl = document.getElementById('rev-list-' + pid);
-      if (!avgEl || !listEl) return;
-      const reviews = getReviews(pid);
-      if (!reviews.length) {
-        avgEl.textContent = 'No reviews yet';
-      } else {
-        const avg = (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1);
-        avgEl.textContent = '★ ' + avg + ' (' + reviews.length + ')';
-      }
-      listEl.innerHTML = reviews.slice().reverse().map(r =>
-        '<div class="review-entry"><span class="stars">' + '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating) +
-        '</span> — ' + (r.text ? escapeHtml(r.text) : '<em>No comment</em>') + ' <span style="opacity:0.7">(' + escapeHtml(r.by) + ', ' + escapeHtml(r.date) + ')</span></div>'
-      ).join('');
-    }
-
-    function updateStats() {
-      const publicProducts = PRODUCTS.filter(p => p.visible !== false);
-      document.getElementById('stat-products').textContent = publicProducts.length;
-      let totalReviews = 0, ratingSum = 0;
-      publicProducts.forEach(p => {
-        const reviews = getReviews(p.id);
-        totalReviews += reviews.length;
-        ratingSum += reviews.reduce((s, r) => s + r.rating, 0);
-      });
-      document.getElementById('stat-reviews').textContent = totalReviews;
-      document.getElementById('stat-rating').textContent = totalReviews ? (ratingSum / totalReviews).toFixed(1) + '★' : '—';
-      document.getElementById('stat-wishlisted').textContent = getWishlist().length;
-    }
-
-    function filterProducts(query) {
-      const q = query.trim().toLowerCase();
-      document.querySelectorAll('.item[data-pid]').forEach(el => {
-        const text = el.textContent.toLowerCase();
-        el.classList.toggle('hidden-by-search', q.length > 0 && !text.includes(q));
-      });
-    }
-
-    checkEditLink();
-    updateAccountUI();
-    renderProducts();
+    const previousIds = Object.keys(REVIEWS_CACHE);
+    REVIEWS_CACHE = byProduct;
+    const allIds = new Set([...previousIds, ...Object.keys(byProduct)]);
+    allIds.forEach(pid => renderReviews(pid));
     updateStats();
-    setSyncStatus('connecting');
-    listenToReviews();
-  </script>
+  }, (err) => console.error('Reviews listener error:', err));
+}
+function toggleReviewForm(pid){ document.getElementById('rev-form-' + pid).classList.toggle('open'); }
+document.addEventListener('click', (e) => {
+  const span = e.target.closest('.star-input span');
+  if (!span) return;
+  const starEl = span.closest('.star-input');
+  const v = parseInt(span.dataset.v, 10);
+  starEl.dataset.value = v;
+  starEl.querySelectorAll('span').forEach(s => s.classList.toggle('filled', parseInt(s.dataset.v, 10) <= v));
+});
+async function submitReview(pid){
+  const starEl = document.getElementById('rev-stars-' + pid);
+  const rating = parseInt(starEl.dataset.value || '0', 10);
+  const textEl = document.getElementById('rev-text-' + pid);
+  const text = textEl.value.trim();
+  if (!rating) { showToast('Pick a star rating first.', 'error'); return; }
+  const entry = { productId: pid, rating, text, by: currentUser() || 'Guest', date: new Date().toLocaleDateString(), createdAt: Date.now() };
+
+  if (firebaseReady){
+    try { await db.collection('reviews').add(entry); }
+    catch(e){ console.error(e); showToast('Could not submit review.', 'error'); return; }
+  } else {
+    const local = getLocalReviews();
+    if (!local[pid]) local[pid] = [];
+    local[pid].push(entry);
+    saveLocalReviews(local);
+    renderReviews(pid);
+    updateStats();
+  }
+  textEl.value = '';
+  starEl.dataset.value = 0;
+  starEl.querySelectorAll('span').forEach(s => s.classList.remove('filled'));
+  document.getElementById('rev-form-' + pid).classList.remove('open');
+  showToast("Thanks for your review!");
+}
+function renderReviews(pid){
+  const avgEl = document.getElementById('rev-avg-' + pid);
+  const listEl = document.getElementById('rev-list-' + pid);
+  if (!avgEl || !listEl) return;
+  const reviews = getReviews(pid);
+  avgEl.textContent = reviews.length
+    ? '★ ' + (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1) + ' (' + reviews.length + ')'
+    : 'No reviews yet';
+  listEl.innerHTML = reviews.slice().reverse().map(r =>
+    '<div class="review-entry"><span class="stars">' + '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating) +
+    '</span> — ' + (r.text ? escapeHtml(r.text) : '<em>No comment</em>') + ' <span style="opacity:0.7">(' + escapeHtml(r.by) + ', ' + escapeHtml(r.date) + ')</span></div>'
+  ).join('');
+}
+
+function updateStats(){
+  const publicProducts = PRODUCTS.filter(p => p.visible !== false);
+  document.getElementById('stat-products').textContent = publicProducts.length;
+  let totalReviews = 0, ratingSum = 0;
+  publicProducts.forEach(p => {
+    const reviews = getReviews(p.id);
+    totalReviews += reviews.length;
+    ratingSum += reviews.reduce((s, r) => s + r.rating, 0);
+  });
+  document.getElementById('stat-reviews').textContent = totalReviews;
+  document.getElementById('stat-rating').textContent = totalReviews ? (ratingSum / totalReviews).toFixed(1) + '★' : '—';
+  document.getElementById('stat-wishlisted').textContent = getWishlist().length;
+}
+
+function filterProducts(query){
+  const q = query.trim().toLowerCase();
+  document.querySelectorAll('#shop .item[data-pid]').forEach(el => {
+    const text = el.textContent.toLowerCase();
+    el.style.display = (q.length > 0 && !text.includes(q)) ? 'none' : '';
+  });
+}
+
+/* =====================================================================
+   PROJECTS — edit this list to change what shows on the Projects page.
+   status: 'live' or 'upcoming'. Leave "img" blank for upcoming ones
+   you don't have art for yet — a placeholder icon shows instead.
+   ===================================================================== */
+const PROJECTS = [
+  { name: 'Portfolio Builder', icon: '🧩', img: 'https://picsum.photos/id/1015/600/300',
+    desc: 'Dynamic single-page portfolio generator with a glass UI.', status: 'live', linkLabel: 'View Live' },
+  { name: 'Discord Music Bot', icon: '🎵', img: 'https://picsum.photos/id/201/600/300',
+    desc: 'Advanced music bot with queue system, lyrics, and playlists.', status: 'live', linkLabel: 'View on GitHub' },
+  { name: 'Roblox Tycoon Kit', icon: '🏗️', img: 'https://picsum.photos/id/237/600/300',
+    desc: 'Modular tycoon framework, easy to customize and monetize.', status: 'live', linkLabel: 'Roblox Page' },
+
+  { name: 'Mobile Companion App', icon: '📱', img: '',
+    desc: "Replace with a real teaser for what's coming.", status: 'upcoming', linkLabel: '' },
+  { name: 'Auto-Delivery Bot', icon: '🤖', img: '',
+    desc: 'A bot to automate shop delivery so orders ship even faster.', status: 'upcoming', linkLabel: '' }
+];
+
+function projectCardHtml(p){
+  const imgHtml = p.img
+    ? '<img src="' + escapeHtml(p.img) + '" alt="' + escapeHtml(p.name) + '">'
+    : '<div class="icon-wrap" style="width:100%; height:170px; border-radius:14px; margin-bottom:16px; font-size:2.6rem;">' + escapeHtml(p.icon) + '</div>';
+  const pill = p.status === 'live'
+    ? '<span class="status-pill status-live">✅ Live</span>'
+    : '<span class="status-pill status-upcoming">🔮 Upcoming</span>';
+  const btn = p.linkLabel ? '<button class="cta-btn">' + escapeHtml(p.linkLabel) + '</button>' : '';
+  return '<div class="glass-card project-card">' + imgHtml + pill +
+    '<h3>' + escapeHtml(p.name) + '</h3><p>' + escapeHtml(p.desc) + '</p>' + btn + '</div>';
+}
+function renderProjects(){
+  const live = PROJECTS.filter(p => p.status === 'live');
+  const upcoming = PROJECTS.filter(p => p.status === 'upcoming');
+  document.getElementById('live-projects-grid').innerHTML = live.map(projectCardHtml).join('')
+    || '<p class="empty-state">No live projects yet — check back soon.</p>';
+  document.getElementById('upcoming-projects-grid').innerHTML = upcoming.map(projectCardHtml).join('')
+    || '<p class="empty-state">Nothing staged right now.</p>';
+}
+
+/* ---------- contact form ---------- */
+function sendMessage(){
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const message = document.getElementById('message').value;
+  if (name && email && message){
+    alert(`Thank you, ${name}! Your message has been received. I'll get back to you soon.`);
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('message').value = '';
+  } else {
+    alert('Please fill out all fields.');
+  }
+}
+
+/* keyboard shortcut: "/" jumps home */
+document.addEventListener('keydown', function(e){
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA'){
+    e.preventDefault();
+    document.getElementById('nav-home').click();
+  }
+});
+
+/* ---------- init ---------- */
+applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+if (!localStorage.getItem('zanverse_welcome_seen')) openModal('welcome-modal');
+initAnnouncement();
+checkEditLink();
+updateAccountUI();
+renderProjects();
+renderProducts();
+updateStats();
+listenToReviews();
+
+console.log('%c✨ ZANVERSE loaded', 'color:#60a5fa; font-size:14px; font-weight:bold;');
+</script>
 </body>
 </html>
